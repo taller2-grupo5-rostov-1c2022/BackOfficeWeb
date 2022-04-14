@@ -44,3 +44,25 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Development
+
+### Testing
+
+- Run tests: `npm test`
+- Run tests w/ coverage: `npm test --coverage`
+
+### Linter
+
+- Run tests: `npm run lint`
+
+### Notes
+
+- still missing
+
+  - CI/CD
+  - Deployment
+  - Docs
+
+- Added Navbar component to show component structure
+- Web Vitals might be useless
