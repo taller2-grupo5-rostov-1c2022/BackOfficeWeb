@@ -5,7 +5,9 @@ import Navbar from "./components/Navbar/Navbar";
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <Navbar text="THIS IS A NAVBAR">
+        <div>THIS IS THE NAVCHILD</div>
+      </Navbar>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
