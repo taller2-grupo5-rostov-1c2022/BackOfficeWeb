@@ -10,8 +10,8 @@ const Home: NextPage = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {
-        console.log("signed out");
+      .then((data) => {
+        console.log("signed out", data);
         router.push("/login");
       })
       .catch((error) => {
