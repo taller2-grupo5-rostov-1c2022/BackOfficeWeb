@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import FormField from "../components/util/FormField/FormField";
 import { Formik, Form } from "formik";
 import styles from "../styles/Login.module.css";
-import { signInWithEmail, signInWithGoogle } from "../config/auth";
+import { signInWithEmail, signInWithGoogle } from "../client/auth";
 import { useRouter } from "next/router";
 
 type loginData = {
