@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5e8bbcab-8156-49f2-bfbc-863ef1cda7bc/deploy-status)](https://app.netlify.com/sites/dancing-custard-2450ff/deploys)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
