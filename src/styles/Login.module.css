@@ -1,0 +1,39 @@
+.FormActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.FormActions button {
+  width: 100%;
+  font-size: 18px;
+  padding: 5px;
+  appearance: none;
+  background-color: #fff0;
+  border: 2px solid #000;
+  border-radius: 20px;
+}
+
+.FormActions button[type="submit"] {
+  border-color: #3b3;
+  background-color: #3b3;
+  color: #fff;
+}
+.FormActions button[type="submit"]:hover {
+  border-color: #2a2;
+  background-color: #2a2;
+}
+
+.FormActions button.google {
+  border-color: #c55;
+  color: #c55;
+}
+.FormActions button.google:hover {
+  background-color: #c553;
+}
+
+.FormActions button:hover {
+  box-shadow: 0 0 3px 0 #0005;
+}

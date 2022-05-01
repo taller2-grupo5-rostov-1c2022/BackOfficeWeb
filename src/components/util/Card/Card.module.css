@@ -1,0 +1,17 @@
+.CardContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  gap: 20px;
+}
+
+.Card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 3px 0 #0008;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.Card:hover {
+  box-shadow: 0 0 6px 0 #0008;
+}

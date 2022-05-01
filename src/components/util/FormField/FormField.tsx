@@ -1,0 +1,59 @@
+import { Field, ErrorMessage } from "formik";
+import styles from "./FormField.module.css";
+
+type FormFieldProps = {
+  label?: string;
+  name: string;
+  placeholder?: string;
+  type?: string;
+  datalistOptions?: string[];
+  selectOptions?: { id: string; name: string }[];
+};
+
+const FormField = ({
+  label,
+  name,
+  placeholder,
+  type,
+  datalistOptions,
+  selectOptions,
+}: FormFieldProps) => {
+  const field = (
+    <Field
+      name={name}
+      type={type ?? "text"}
+      placeholder={placeholder}
+      list={datalistOptions && `${name}-datalist`}
+      as={type === "select" || selectOptions ? "select" : "input"}
+      className={styles.Field}
+    >
+      {selectOptions?.map(({ id, name }, i) => (
+        <option key={i} value={id}>
+          {name}
+        </option>
+      ))}
+    </Field>
+  );
+
+  const datalist = datalistOptions && (
+    <datalist id={`${name}-datalist`}>
+      {datalistOptions.map((value, i) => (
+        <option value={value} key={i} />
+      ))}
+    </datalist>
+  );
+
+  return (
+    <>
+      <h3 className={styles.Label}>{label ?? name}</h3>
+
+      {field}
+
+      <ErrorMessage name={name} component="div" className={styles.Error} />
+
+      {datalist}
+    </>
+  );
+};
+
+export default FormField;
