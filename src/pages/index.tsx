@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { logOut } from "../client/auth";
-import { useRouter } from "next/router";
 
 import {
   AuthAction,
@@ -14,7 +13,6 @@ import styles from "../styles/Home.module.css";
 
 const Home: any = () => {
   const AuthUser = useAuthUser();
-  const router = useRouter();
 
   const handleLogOut = () => {
     console.log("signing out");
@@ -22,7 +20,6 @@ const Home: any = () => {
       .then(async () => {
         await AuthUser.signOut();
         console.log("signed out");
-        router.push("/auth");
       })
       .catch((error) => {
         console.error("error signing out", error);
@@ -52,4 +49,6 @@ export const getServerSideProps = withAuthUserTokenSSR({
   whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
 })();
 
-export default withAuthUser()(Home);
+export default withAuthUser({
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+})(Home);

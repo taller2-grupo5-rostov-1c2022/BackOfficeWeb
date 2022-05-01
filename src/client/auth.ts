@@ -6,17 +6,15 @@ import {
   signOut,
 } from "firebase/auth";
 
-const auth = getAuth();
-
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
+  return signInWithPopup(getAuth(), provider);
 };
 
 export const signInWithEmail = async (email: string, password: string) => {
-  return signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(getAuth(), email, password);
 };
 
 export const logOut = () => {
-  return signOut(auth);
+  return signOut(getAuth());
 };

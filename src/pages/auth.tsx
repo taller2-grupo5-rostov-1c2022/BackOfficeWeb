@@ -8,6 +8,7 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import { signInWithEmail, signInWithGoogle } from "../client/auth";
+import { useRouter } from "next/router";
 
 type loginData = {
   user_name: string;
@@ -15,6 +16,7 @@ type loginData = {
 };
 
 const Auth: any = () => {
+  const router = useRouter();
   const initialValues: loginData = {
     user_name: "",
     user_password: "",
@@ -31,6 +33,7 @@ const Auth: any = () => {
     signInWithEmail(values.user_name, values.user_password)
       .then((user) => {
         console.log("user", user);
+        router.push("/");
       })
       .catch((error) => {
         console.error("error singing with email", error);
@@ -41,6 +44,7 @@ const Auth: any = () => {
     signInWithGoogle()
       .then((user) => {
         console.log("user", user);
+        router.push("/");
       })
       .catch((error) => {
         console.error("error singing with google", error);
@@ -79,5 +83,8 @@ export const getServerSideProps = withAuthUserTokenSSR({
 })();
 
 export default withAuthUser({
-  whenAuthed: AuthAction.REDIRECT_TO_APP,
+  // This enters redirect loop, going to use router
+  // whenAuthed: AuthAction.REDIRECT_TO_APP,
+  // whenUnauthedBeforeInit: AuthAction.RETURN_NULL,
+  // whenUnauthedAfterInit: AuthAction.RENDER,
 })(Auth);

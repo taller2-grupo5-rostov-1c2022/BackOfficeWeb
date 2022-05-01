@@ -6,6 +6,12 @@ const initAuth = () => {
     appPageURL: "/",
     loginAPIEndpoint: "/api/login", // required
     logoutAPIEndpoint: "/api/logout", // required
+    onLoginRequestError: (err) => {
+      console.error(err);
+    },
+    onLogoutRequestError: (err) => {
+      console.error(err);
+    },
     firebaseAdminInitConfig: {
       credential: {
         projectId: "rostov-spotifiuby",
@@ -35,6 +41,12 @@ const initAuth = () => {
       sameSite: "strict",
       secure: true, // set this to false in local (non-HTTPS) development
       signed: true,
+    },
+    onVerifyTokenError: (err) => {
+      console.error(err);
+    },
+    onTokenRefreshError: (err) => {
+      console.error(err);
     },
   });
 };
