@@ -6,8 +6,6 @@ import {
   signOut,
 } from "firebase/auth";
 
-import "./firebase.ts";
-
 const auth = getAuth();
 
 export const signInWithGoogle = async () => {

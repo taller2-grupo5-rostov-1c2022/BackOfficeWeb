@@ -2,17 +2,19 @@ import type { NextPage } from "next";
 import FormField from "../components/util/FormField/FormField";
 import { Formik, Form } from "formik";
 import styles from "../styles/Login.module.css";
+import {
+  AuthAction,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from "next-firebase-auth";
 import { signInWithEmail, signInWithGoogle } from "../client/auth";
-import { useRouter } from "next/router";
 
 type loginData = {
   user_name: string;
   user_password: string;
 };
 
-const Login: NextPage = () => {
-  const router = useRouter();
-
+const Auth: any = () => {
   const initialValues: loginData = {
     user_name: "",
     user_password: "",
@@ -29,7 +31,6 @@ const Login: NextPage = () => {
     signInWithEmail(values.user_name, values.user_password)
       .then((user) => {
         console.log("user", user);
-        router.push("/");
       })
       .catch((error) => {
         console.error("error singing with email", error);
@@ -40,7 +41,6 @@ const Login: NextPage = () => {
     signInWithGoogle()
       .then((user) => {
         console.log("user", user);
-        router.push("/");
       })
       .catch((error) => {
         console.error("error singing with google", error);
@@ -74,4 +74,10 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+})();
+
+export default withAuthUser({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+})(Auth);

@@ -1,18 +1,28 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { logOut } from "../client/auth";
+import { useRouter } from "next/router";
+
+import {
+  AuthAction,
+  useAuthUser,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from "next-firebase-auth";
 
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
+const Home: any = () => {
+  const AuthUser = useAuthUser();
   const router = useRouter();
 
   const handleLogOut = () => {
+    console.log("signing out");
     logOut()
-      .then((data) => {
-        console.log("signed out", data);
-        router.push("/login");
+      .then(async () => {
+        await AuthUser.signOut();
+        console.log("signed out");
+        router.push("/auth");
       })
       .catch((error) => {
         console.error("error signing out", error);
@@ -30,10 +40,16 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h2>Welcome to the Back Office</h2>
 
+        <h4>{AuthUser?.email}</h4>
+
         <div onClick={handleLogOut}>sign out</div>
       </main>
     </div>
   );
 };
 
-export default Home;
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})();
+
+export default withAuthUser()(Home);

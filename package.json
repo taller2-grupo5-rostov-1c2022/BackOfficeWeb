@@ -13,9 +13,10 @@
     "firebase-admin": "^10.1.0",
     "formik": "^2.2.9",
     "next": "12.1.5",
-    "next-firebase-auth": "^0.14.3",
+    "next-firebase-auth": "^1.0.0-canary.8",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-firebaseui": "^6.0.0"
   },
   "devDependencies": {
     "@types/node": "17.0.30",

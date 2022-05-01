@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AuthAction,
   useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
@@ -15,6 +16,8 @@ const Demo = () => {
 };
 
 // Note that this is a higher-order function.
-export const getServerSideProps = withAuthUserTokenSSR()();
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenUnauthed: AuthAction.REDIRECT_TO_LOGIN,
+})();
 
 export default withAuthUser()(Demo);
