@@ -1,4 +1,5 @@
 import { init } from "next-firebase-auth";
+import { logOut } from "../client/auth";
 
 const initAuth = () => {
   init({
@@ -8,6 +9,7 @@ const initAuth = () => {
     logoutAPIEndpoint: "/api/logout", // required
     onLoginRequestError: (err) => {
       console.error(err);
+      logOut();
     },
     onLogoutRequestError: (err) => {
       console.error(err);
@@ -44,9 +46,11 @@ const initAuth = () => {
     },
     onVerifyTokenError: (err) => {
       console.error(err);
+      logOut();
     },
     onTokenRefreshError: (err) => {
       console.error(err);
+      logOut();
     },
   });
 };
