@@ -24,3 +24,7 @@ a {
   align-items: center;
   justify-content: center;
 }
+
+.w80 {
+  width: 80%;
+}

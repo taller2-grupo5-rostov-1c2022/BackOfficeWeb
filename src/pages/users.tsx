@@ -1,30 +1,25 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { logOut } from "../client/auth";
+import { DataGrid } from "@mui/x-data-grid";
 
 import {
   AuthAction,
-  useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 
 import styles from "../styles/Home.module.css";
+import { useFetchOnLoad } from "../services/hooks";
+import { usersApi } from "../services/users";
 
-const Home: any = () => {
-  const AuthUser = useAuthUser();
-
-  const handleLogOut = () => {
-    console.log("signing out");
-    logOut()
-      .then(async () => {
-        await AuthUser.signOut();
-        console.log("signed out");
-      })
-      .catch((error) => {
-        console.error("error signing out", error);
-      });
-  };
+const columns = [
+  { field: "uid", headerName: "UID", width: 200 },
+  { field: "displayName", headerName: "Name", width: 200 },
+  { field: "email", headerName: "Email", width: 200 },
+];
+const Users: any = () => {
+  const { data, loading, error } = useFetchOnLoad(usersApi);
+  const users = data?.users;
 
   return (
     <div className={styles.container}>
@@ -37,9 +32,20 @@ const Home: any = () => {
       <main className={styles.main}>
         <h2>Welcome to the Users Page</h2>
 
-        <h4>{AuthUser?.email}</h4>
-
-        <div onClick={handleLogOut}>sign out</div>
+        {loading ? (
+          <p>Loading</p>
+        ) : error ? (
+          <p>Error</p>
+        ) : (
+          <DataGrid
+            className="w80"
+            rows={users}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[5, 10, 50, 100]}
+            getRowId={(row) => row.uid}
+          />
+        )}
       </main>
     </div>
   );
@@ -51,4 +57,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-})(Home);
+})(Users);
