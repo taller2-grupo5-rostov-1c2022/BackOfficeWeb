@@ -30,7 +30,7 @@ const handler = async (req, res) => {
     await setAuthCookies(req, res);
     return res.status(200).json({ success: true });
   } catch (e) {
-    return res.status(500).json({ error: "Unexpected error." });
+    return res.status(500).json({ error: "Unexpected error.", e });
   }
 };
 
