@@ -12,27 +12,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
-
-const _pages = ["Contenido", "Metricas", "Blog"];
-const pages = [
-  {
-    label: "Usuarios",
-    url: "/users",
-  },
-  {
-    label: "Contenido",
-    url: "/",
-    //url: "/content",
-  },
-  {
-    label: "Métricas",
-    url: "/",
-    //url: "/metrics",
-  },
-];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { withAuthUser, useAuthUser } from "next-firebase-auth";
+import { logOut } from "../../client/auth";
 
 const ResponsiveAppBar = () => {
+  const authUser = useAuthUser();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -54,6 +39,41 @@ const ResponsiveAppBar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const pages = [
+    {
+      label: "Usuarios",
+      url: "/users",
+    },
+    {
+      label: "Contenido",
+      url: "/",
+      //url: "/content",
+    },
+    {
+      label: "Métricas",
+      url: "/",
+      //url: "/metrics",
+    },
+  ];
+  const _settings = ["Profile", "Account", "Dashboard", "Logout"];
+  const settings = [
+    {
+      label: "Profile",
+      onClick: () => {
+        console.log("Profile", authUser);
+      },
+    },
+    {
+      label: "Logout",
+      onClick: () => {
+        console.log("Logout");
+        logOut();
+      },
+    },
+  ];
+
+  if (!authUser?.id) return <></>;
 
   return (
     <AppBar position="static">
@@ -134,7 +154,10 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt="Remy Sharp"
+                  src={authUser?.photoURL ?? "/static/user"}
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -153,9 +176,11 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {settings.map(({ label, onClick }, i) => (
+                <MenuItem key={i} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center" onClick={onClick}>
+                    {label}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -165,4 +190,4 @@ const ResponsiveAppBar = () => {
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default withAuthUser()(ResponsiveAppBar);

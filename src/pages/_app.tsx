@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import initAuth from "../server/initAuth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ResponsiveAppBar from "../components/util/AppBar/AppBar";
+import ResponsiveAppBar from "../components/Navigation/AppBar";
 
 initAuth();
 
