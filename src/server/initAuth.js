@@ -3,6 +3,10 @@ import { logOut } from "../client/auth";
 import { toast } from "react-toastify";
 
 const initAuth = () => {
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY
+    ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
+    : undefined;
+
   init({
     authPageURL: "/auth",
     appPageURL: "/",
@@ -21,7 +25,7 @@ const initAuth = () => {
         clientEmail:
           "firebase-adminsdk-1ec7p@rostov-spotifiuby.iam.gserviceaccount.com",
         // The private key must not be accessible on the client side.
-        privateKey: process.env.FIREBASE_PRIVATE_KEY,
+        privateKey,
       },
     },
     firebaseClientInitConfig: {
