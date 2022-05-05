@@ -12,9 +12,8 @@ import {
 } from "next-firebase-auth";
 
 import styles from "../styles/Home.module.css";
-import { useFetchOnLoad } from "../services/hooks";
-import { usersApi } from "../services/requests";
-import { setRole } from "../services/requests";
+import { usersApi, setRole, jsonFetcher } from "../services/requests";
+import useSwr from "swr";
 
 const LogButton = ({ user }: any) => {
   return <button onClick={() => console.log(user)}>LOG</button>;
@@ -66,7 +65,7 @@ const columns = [
   },
 ];
 const Users: any = () => {
-  const { data, loading, error } = useFetchOnLoad(usersApi);
+  const { data, isValidating: loading, error } = useSwr(usersApi, jsonFetcher);
   const users = data?.users;
 
   return (
@@ -80,20 +79,31 @@ const Users: any = () => {
       <main className={styles.main}>
         <h2>Welcome to the Users Page</h2>
 
-        {loading ? (
-          <p>Loading</p>
-        ) : error ? (
+        {error ? (
           <p>Error</p>
-        ) : (
+        ) : users ? (
           <DataGrid
             className="w80"
-            rows={users}
+            rows={users ?? []}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[5, 10, 50, 100]}
             getRowId={(row) => row.uid}
           />
+        ) : loading ? (
+          <p>Loading...</p>
+        ) : (
+          <p>No users</p>
         )}
+        <button
+          onClick={() => {
+            console.log(data);
+            console.log(loading);
+            console.log(error);
+          }}
+        >
+          CLICK
+        </button>
       </main>
     </div>
   );

@@ -4,10 +4,8 @@ import { getAuth } from "firebase-admin/auth";
 
 initAuth();
 
-const adminMails = ["user@gmail.com", "fdeluca@fi.uba.ar"];
-
-const isAdmin = (email) => {
-  return adminMails.includes(email);
+const isAdmin = (user) => {
+  return user?.role === "admin";
 };
 
 const handler = async (req, res) => {
@@ -16,8 +14,7 @@ const handler = async (req, res) => {
     if (!token) return res.status(403).json({ error: "Unauthorized" });
     const user = await getAuth().verifyIdToken(token);
 
-    if (!isAdmin(user.email))
-      return res.status(403).json({ error: "Unauthorized" });
+    if (!isAdmin(user)) return res.status(403).json({ error: "Unauthorized" });
 
     await setAuthCookies(req, res);
   } catch (e) {
