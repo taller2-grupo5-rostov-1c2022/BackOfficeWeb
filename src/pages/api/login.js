@@ -4,7 +4,7 @@ import { getAuth } from "firebase-admin/auth";
 
 initAuth();
 
-const adminMails = ["user@gmaisl.com", "fdeluca@fi.uba.ar"];
+const adminMails = ["user@gmail.com", "fdeluca@fi.uba.ar"];
 
 const isAdmin = (email) => {
   return adminMails.includes(email);
