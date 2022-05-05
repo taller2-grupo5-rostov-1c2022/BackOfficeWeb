@@ -2,12 +2,13 @@ import type { NextPage } from "next";
 import FormField from "../components/util/FormField/FormField";
 import { Formik, Form } from "formik";
 import styles from "../styles/Login.module.css";
+import { signInWithEmail, signInWithGoogle } from "../client/auth";
+import { toast } from "react-toastify";
 import {
   AuthAction,
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
-import { signInWithEmail, signInWithGoogle } from "../client/auth";
 
 type loginData = {
   user_name: string;
@@ -27,6 +28,10 @@ const Auth: any = () => {
     return errors;
   };
 
+  const handleError = (error: any) => {
+    toast.error(error.message);
+  };
+
   const onSubmit = (values: loginData) => {
     signInWithEmail(values.user_name, values.user_password)
       .then((user) => {
@@ -34,6 +39,7 @@ const Auth: any = () => {
       })
       .catch((error) => {
         console.error("error singing with email", error);
+        handleError(error);
       });
   };
 
@@ -44,6 +50,7 @@ const Auth: any = () => {
       })
       .catch((error) => {
         console.error("error singing with google", error);
+        handleError(error);
       });
   };
 

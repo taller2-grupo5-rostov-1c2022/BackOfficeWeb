@@ -1,5 +1,6 @@
 import { init } from "next-firebase-auth";
 import { logOut } from "../client/auth";
+import { toast } from "react-toastify";
 
 const initAuth = () => {
   init({
@@ -8,8 +9,8 @@ const initAuth = () => {
     loginAPIEndpoint: "/api/login", // required
     logoutAPIEndpoint: "/api/logout", // required
     onLoginRequestError: (err) => {
-      console.error(err);
       logOut();
+      toast.error("User is not an admin");
     },
     onLogoutRequestError: (err) => {
       console.error(err);
@@ -43,14 +44,6 @@ const initAuth = () => {
       sameSite: "strict",
       secure: true, // set this to false in local (non-HTTPS) development
       signed: true,
-    },
-    onVerifyTokenError: (err) => {
-      console.error(err);
-      logOut();
-    },
-    onTokenRefreshError: (err) => {
-      console.error(err);
-      logOut();
     },
   });
 };
