@@ -1,6 +1,5 @@
 export const authApi = "/api/users";
-export const usersApi =
-  "https://rostov-song-server.herokuapp.com/api/v3/users/";
+export const usersApi = "https://rostov-gateway.herokuapp.com/songs/users/";
 
 export const jsonFetcher = (url: string) => {
   return fetch(url).then((response) => response.json());

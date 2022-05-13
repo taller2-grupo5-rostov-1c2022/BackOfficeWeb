@@ -1,10 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
 import Link from "next/link";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 
 import {
   AuthAction,
@@ -15,39 +12,13 @@ import {
 import styles from "../../styles/Home.module.css";
 import { authApi, setRole, jsonFetcher } from "../../services/requests";
 import useSwr from "swr";
+import RoleButton from "../../components/Users/RoleButton";
 
 const UserButton = ({ user }: any) => {
   return (
     <Link href={"/users/user?uid=" + user.uid}>
       <a>View</a>
     </Link>
-  );
-};
-
-const RoleButton = ({ user }: any) => {
-  const [currentRole, setCurrentRole] = useState(
-    user?.customClaims?.role ?? "listener"
-  );
-
-  const _setRole = async (role: string) => {
-    const res = await setRole(user?.uid, role);
-    setCurrentRole(res.role);
-  };
-
-  const roles = ["listener", "artist", "admin"];
-
-  return (
-    <Stack spacing={2} direction="row">
-      {roles.map((role, index) => (
-        <Button
-          key={index}
-          onClick={() => _setRole(role)}
-          variant={currentRole === role ? "contained" : "outlined"}
-        >
-          {role}
-        </Button>
-      ))}
-    </Stack>
   );
 };
 
@@ -87,6 +58,7 @@ const Users: any = () => {
           <p>Error</p>
         ) : users ? (
           <DataGrid
+            autoHeight={true}
             className="w80"
             rows={users ?? []}
             columns={columns}
