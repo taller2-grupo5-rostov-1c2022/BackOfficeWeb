@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
   const pages = [
     {
       label: "Usuarios",
-      url: "/users",
+      url: "/users/users",
     },
     {
       label: "Contenido",

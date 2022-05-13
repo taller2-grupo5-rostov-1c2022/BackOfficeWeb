@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
+import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
@@ -11,12 +12,16 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 
-import styles from "../styles/Home.module.css";
-import { usersApi, setRole, jsonFetcher } from "../services/requests";
+import styles from "../../styles/Home.module.css";
+import { authApi, setRole, jsonFetcher } from "../../services/requests";
 import useSwr from "swr";
 
-const LogButton = ({ user }: any) => {
-  return <button onClick={() => console.log(user)}>LOG</button>;
+const UserButton = ({ user }: any) => {
+  return (
+    <Link href={"/users/user?uid=" + user.uid}>
+      <a>View</a>
+    </Link>
+  );
 };
 
 const RoleButton = ({ user }: any) => {
@@ -57,15 +62,14 @@ const columns = [
     renderCell: ({ row: user }: any) => <RoleButton user={user} />,
   },
   {
-    field: "log",
-    headerName: "log",
+    field: "uid",
+    headerName: "Detail",
     width: 100,
-    valueGetter: ({ row: user }: any) => user?.customClaims?.role ?? "listener",
-    renderCell: ({ row: user }: any) => <LogButton user={user} />,
+    renderCell: ({ row: user }: any) => <UserButton user={user} />,
   },
 ];
 const Users: any = () => {
-  const { data, isValidating: loading, error } = useSwr(usersApi, jsonFetcher);
+  const { data, isValidating: loading, error } = useSwr(authApi, jsonFetcher);
   const users = data?.users;
 
   return (
