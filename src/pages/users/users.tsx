@@ -31,9 +31,10 @@ const columns = [
     headerName: "Role",
     width: 400,
     renderCell: ({ row: user }: any) => <RoleButton user={user} />,
+    valueGetter: ({ row: user }: any) => user?.customClaims?.role,
   },
   {
-    field: "uid",
+    field: "detail",
     headerName: "Detail",
     width: 100,
     renderCell: ({ row: user }: any) => <UserButton user={user} />,
@@ -71,15 +72,6 @@ const Users: any = () => {
         ) : (
           <p>No users</p>
         )}
-        <button
-          onClick={() => {
-            console.log(data);
-            console.log(loading);
-            console.log(error);
-          }}
-        >
-          CLICK
-        </button>
       </main>
     </div>
   );

@@ -25,7 +25,7 @@ const UserAlbums = ({ albums }: { albums: AlbumType[] }) => {
   return (
     <DataGrid
       autoHeight={true}
-      className="w80"
+      className="w100"
       rows={albums ?? []}
       columns={columns}
       pageSize={10}

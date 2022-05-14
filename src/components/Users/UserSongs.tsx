@@ -36,7 +36,7 @@ const UserSongs = ({ songs }: { songs: SongType[] }) => {
   return (
     <DataGrid
       autoHeight={true}
-      className="w80"
+      className="w100"
       rows={songs ?? []}
       columns={columns}
       pageSize={10}
