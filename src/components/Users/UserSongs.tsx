@@ -16,19 +16,21 @@ const AlbumRow = ({ song }: { song: SongType }) => {
 const UserSongs = ({ songs }: { songs: SongType[] }) => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "description", headerName: "Description", width: 300 },
+    { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
+    { field: "description", headerName: "Description", minWidth: 300, flex: 1 },
     { field: "genre", headerName: "Genre", width: 200 },
     {
       field: "artists",
       headerName: "Artists",
-      width: 400,
+      minWidth: 400,
+      flex: 1,
       renderCell: ({ row: song }: any) => <ArtistRow song={song} />,
     },
     {
       field: "album.id",
       headerName: "Album",
-      width: 400,
+      minWidth: 400,
+      flex: 1,
       renderCell: ({ row: song }: any) => <AlbumRow song={song} />,
     },
   ];

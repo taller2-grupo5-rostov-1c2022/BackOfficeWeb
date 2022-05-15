@@ -8,14 +8,15 @@ const SongsRow = ({ songs }: { songs: SongType[] }) => {
 const UserAlbums = ({ albums }: { albums: AlbumType[] }) => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "name", headerName: "Name", width: 200 },
-    { field: "description", headerName: "Description", width: 300 },
+    { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
+    { field: "description", headerName: "Description", minWidth: 300, flex: 1 },
     { field: "genre", headerName: "Genre", width: 200 },
     { field: "sub_level", headerName: "Subscription", width: 200 },
     {
       field: "songs",
       headerName: "Songs",
-      width: 400,
+      minWidth: 400,
+      flex: 1,
       renderCell: ({ row: album }: any) => (
         <SongsRow songs={album?.songs ?? []} />
       ),

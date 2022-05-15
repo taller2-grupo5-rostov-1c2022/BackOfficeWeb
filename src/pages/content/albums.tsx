@@ -20,14 +20,14 @@ const AlbumsButton = ({ album }: any) => {
 
 const columns = [
   { field: "id", headerName: "ID", width: 50 },
-  { field: "name", headerName: "Name", width: 200, flex: 1 },
-  { field: "description", headerName: "Description", width: 250, flex: 1 },
+  { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
+  { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
   { field: "genre", headerName: "Genre", width: 100 },
   { field: "sub_level", headerName: "Subscription", width: 100 },
   {
     field: "songs",
     headerName: "Songs",
-    width: 150,
+    minWidth: 150,
     flex: 1,
     valueGetter: ({ row: album }: any) =>
       album?.songs?.map(({ id, name }: any) => `${name} [${id}]`).join(", "),

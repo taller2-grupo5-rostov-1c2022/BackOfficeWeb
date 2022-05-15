@@ -20,8 +20,8 @@ const SongsButton = ({ song }: any) => {
 
 const columns = [
   { field: "id", headerName: "ID", width: 50 },
-  { field: "name", headerName: "Name", width: 200, flex: 1 },
-  { field: "description", headerName: "Description", width: 250, flex: 1 },
+  { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
+  { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
   { field: "genre", headerName: "Genre", width: 100 },
   {
     field: "album",
@@ -33,7 +33,7 @@ const columns = [
   {
     field: "artists",
     headerName: "Artists",
-    width: 200,
+    minWidth: 200,
     flex: 1,
     valueGetter: ({ row: song }: any) =>
       song?.artists?.map((artist: any) => artist?.name).join(", "),
