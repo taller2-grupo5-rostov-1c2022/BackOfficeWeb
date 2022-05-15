@@ -10,7 +10,7 @@ import {
 } from "next-firebase-auth";
 
 import styles from "../../styles/Home.module.css";
-import { authApi, setRole, jsonFetcher } from "../../services/requests";
+import { authApi, jsonFetcher } from "../../services/requests";
 import useSwr from "swr";
 import RoleButton from "../../components/Users/RoleButton";
 

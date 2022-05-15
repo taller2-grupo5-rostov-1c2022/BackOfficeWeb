@@ -2,13 +2,12 @@ import { useRouter } from "next/router";
 import {
   usersApi,
   authApi,
-  authFetcher,
+  useAuthFetcher,
   jsonFetcher,
 } from "../../services/requests";
 import useSwr from "swr";
 import {
   AuthAction,
-  useAuthUser,
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
@@ -17,15 +16,14 @@ import Profile from "../../components/Users/Profile";
 
 const User = () => {
   const router = useRouter();
-  const AuthUser = useAuthUser() as any;
-  const token = AuthUser?.firebaseUser?.accessToken;
+  const { authFetcher, token } = useAuthFetcher();
   const uid = router?.query?.uid as string;
 
   const {
     data: user,
     isValidating: user_loading,
     error: user_error,
-  } = useSwr(token ? usersApi + uid : null, authFetcher(token));
+  } = useSwr(token ? usersApi + uid : null, authFetcher);
   const {
     data: authUser,
     isValidating: authUser_loading,

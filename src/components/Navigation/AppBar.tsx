@@ -47,8 +47,7 @@ const ResponsiveAppBar = () => {
     },
     {
       label: "Contenido",
-      url: "/",
-      //url: "/content",
+      url: "/content",
     },
     {
       label: "Métricas",

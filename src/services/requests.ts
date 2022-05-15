@@ -1,5 +1,9 @@
+import { useAuthUser } from "next-firebase-auth";
+
 export const authApi = "/api/users";
 export const usersApi = "https://rostov-gateway.herokuapp.com/songs/users/";
+export const songsApi = "https://rostov-gateway.herokuapp.com/songs/songs/";
+export const albumsApi = "https://rostov-gateway.herokuapp.com/songs/albums/";
 
 export const jsonFetcher = (url: string) => {
   return fetch(url).then((response) => response.json());
@@ -14,6 +18,13 @@ export const authFetcher = (auth: string) => (url: string) => {
       },
     }).then((response) => response.json())
   );
+};
+
+export const useAuthFetcher = () => {
+  const auth = useAuthUser() as any;
+  const token = auth?.firebaseUser?.accessToken as string;
+  const _authFetcher = authFetcher(token);
+  return { authFetcher: _authFetcher, token };
 };
 
 export const setRole = async (uid: string, role: string) => {
