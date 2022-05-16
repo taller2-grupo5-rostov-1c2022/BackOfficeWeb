@@ -22,7 +22,7 @@ const Playlist = ({ playlist, loading, error }: PlaylistProps) => {
         <KeyValuePair label="Description" value={playlist?.description} />
         <KeyValuePair label="Creator" value={playlist?.creator_id} />
       </div>
-      <h1>Songs</h1>
+      <h2>Songs</h2>
       <SongsList songs={playlist?.songs ?? []} />
     </div>
   );

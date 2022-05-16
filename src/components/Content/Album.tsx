@@ -34,7 +34,7 @@ const Album = ({ album, loading, error }: AlbumProps) => {
           <KeyValuePair label="Creator" value={album?.creator_id} />
         </div>
       </div>
-      <h1>Songs</h1>
+      <h2>Songs</h2>
       <SongsList songs={album?.songs} />
     </div>
   );
