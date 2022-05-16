@@ -1,11 +1,11 @@
 import { UserType, AuthUserType } from "../../util/types";
 import { parseArray } from "../../util/util";
 import RoleButton from "./RoleButton";
-import UserSongs from "../Content/SongsList";
-import UserAlbums from "./UserAlbums";
 
 import styles from "./Users.module.css";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
+import SongsList from "../Content/SongsList";
+import AlbumsList from "../Content/AlbumsLists";
 
 const defaultPfp = "https://c.tenor.com/XdFv1bbfOdEAAAAd/user-icons.gif";
 
@@ -64,10 +64,15 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
       </div>
 
       <h2>Songs</h2>
-      <UserSongs songs={user?.songs} />
+      <SongsList songs={user?.songs} />
 
       <h2>Albums</h2>
-      <UserAlbums albums={user?.albums} />
+      <AlbumsList albums={user?.albums} />
+
+      {
+        //<h2>Playlists</h2>
+        //<PlaylistsList playlists={user?.playlists} />
+      }
     </div>
   );
 };

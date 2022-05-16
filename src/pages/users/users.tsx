@@ -53,7 +53,7 @@ const Users: any = () => {
       </Head>
 
       <main className={styles.main}>
-        <h2>Welcome to the Users Page</h2>
+        <h2>Users</h2>
 
         {error ? (
           <p>Error</p>

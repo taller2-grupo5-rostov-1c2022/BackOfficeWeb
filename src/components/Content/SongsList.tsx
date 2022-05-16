@@ -1,37 +1,49 @@
 import { SongType } from "../../util/types";
 import { DataGrid } from "@mui/x-data-grid";
+import Link from "next/link";
 
-const ArtistRow = ({ song }: { song: SongType }) => {
-  return <div>{song?.artists?.map(({ name }) => name).join(", ")}</div>;
+const SongsButton = ({ song }: any) => {
+  return (
+    <Link href={"/content/song?id=" + song.id}>
+      <a>View</a>
+    </Link>
+  );
 };
 
-const AlbumRow = ({ song }: { song: SongType }) => {
+const AlbumLink = ({ row: song }: any) => {
   return (
-    <div>
-      {song?.album?.name} [{song?.album?.id}]
-    </div>
+    <Link href={"/content/album?id=" + song?.album?.id}>
+      <a>{song?.album?.name}</a>
+    </Link>
   );
 };
 
 const SongsList = ({ songs }: { songs: SongType[] }) => {
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", width: 50 },
     { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
-    { field: "description", headerName: "Description", minWidth: 300, flex: 1 },
-    { field: "genre", headerName: "Genre", width: 200 },
+    { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
+    { field: "genre", headerName: "Genre", width: 100 },
+    {
+      field: "album",
+      headerName: "Album",
+      width: 150,
+      valueGetter: ({ row: song }: any) => song?.album?.name,
+      renderCell: AlbumLink,
+    },
     {
       field: "artists",
       headerName: "Artists",
-      minWidth: 400,
+      minWidth: 200,
       flex: 1,
-      renderCell: ({ row: song }: any) => <ArtistRow song={song} />,
+      valueGetter: ({ row: song }: any) =>
+        song?.artists?.map((artist: any) => artist?.name).join(", "),
     },
     {
-      field: "album.id",
-      headerName: "Album",
-      minWidth: 400,
-      flex: 1,
-      renderCell: ({ row: song }: any) => <AlbumRow song={song} />,
+      field: "detail",
+      headerName: "Detail",
+      width: 100,
+      renderCell: ({ row: song }: any) => <SongsButton song={song} />,
     },
   ];
 
