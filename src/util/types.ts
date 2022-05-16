@@ -20,6 +20,15 @@ export type AlbumType = {
   genre: string;
   sub_level: number;
   songs: SongType[];
+  cover: string;
+};
+
+export type PlaylistType = {
+  id: number | string;
+  name: string;
+  description: string;
+  creator_id: number | string;
+  songs?: SongType[];
 };
 
 export type UserType = {

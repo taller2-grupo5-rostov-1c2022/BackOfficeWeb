@@ -18,11 +18,21 @@ const Album = ({ album, loading, error }: AlbumProps) => {
   return (
     <div className={styles.Album}>
       <h1>{album?.name}</h1>
-      <div className="borderbox">
-        <KeyValuePair label="Description" value={album?.description} />
-        <KeyValuePair label="Genre" value={album?.genre} />
-        <KeyValuePair label="Subscription" value={album?.sub_level} />
-        <KeyValuePair label="Creator" value={album?.creator_id} />
+      <div className={styles.header + " borderbox"}>
+        <div>
+          <img
+            src={album?.cover}
+            alt={"album cover"}
+            width="180"
+            height="180"
+          />
+        </div>
+        <div className={styles.data}>
+          <KeyValuePair label="Description" value={album?.description} />
+          <KeyValuePair label="Genre" value={album?.genre} />
+          <KeyValuePair label="Subscription" value={album?.sub_level} />
+          <KeyValuePair label="Creator" value={album?.creator_id} />
+        </div>
       </div>
       <h1>Songs</h1>
       <SongsList songs={album?.songs} />

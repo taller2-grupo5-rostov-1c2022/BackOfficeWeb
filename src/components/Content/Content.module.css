@@ -1,2 +1,9 @@
-.Song {
+.header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.header img {
+  border-radius: 4px;
+  box-shadow: 0 0 1px 0 #0003;
 }
