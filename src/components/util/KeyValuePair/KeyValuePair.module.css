@@ -1,0 +1,10 @@
+.KeyValuePair {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+.KeyValuePair .Label {
+  font-weight: bold;
+}

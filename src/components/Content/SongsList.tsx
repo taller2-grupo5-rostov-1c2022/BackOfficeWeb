@@ -13,7 +13,7 @@ const AlbumRow = ({ song }: { song: SongType }) => {
   );
 };
 
-const UserSongs = ({ songs }: { songs: SongType[] }) => {
+const SongsList = ({ songs }: { songs: SongType[] }) => {
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
@@ -48,4 +48,4 @@ const UserSongs = ({ songs }: { songs: SongType[] }) => {
   );
 };
 
-export default UserSongs;
+export default SongsList;

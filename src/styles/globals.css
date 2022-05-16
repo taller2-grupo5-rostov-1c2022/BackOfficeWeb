@@ -25,6 +25,13 @@ a {
   justify-content: center;
 }
 
+.borderbox {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #0002;
+  border-radius: 4px;
+}
+
 .w80 {
   width: 80%;
 }

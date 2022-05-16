@@ -11,32 +11,10 @@
   display: flex;
   align-items: center;
   gap: 30px;
-  width: 100%;
-  padding: 1rem;
-  border: 1px solid #0002;
-  border-radius: 4px;
 }
 .ProfileHeader h1 {
   margin-top: 0;
 }
 .ProfileHeader img {
   border-radius: 50%;
-}
-.ProfileHeader .data {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  gap: 10px;
-  margin-left: 40px;
-}
-
-.KeyValuePair {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-.KeyValuePair .Label {
-  font-weight: bold;
 }

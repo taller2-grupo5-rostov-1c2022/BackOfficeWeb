@@ -1,25 +1,13 @@
 import { UserType, AuthUserType } from "../../util/types";
 import { parseArray } from "../../util/util";
 import RoleButton from "./RoleButton";
-import UserSongs from "./UserSongs";
+import UserSongs from "../Content/SongsList";
 import UserAlbums from "./UserAlbums";
 
 import styles from "./Users.module.css";
+import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 
 const defaultPfp = "https://c.tenor.com/XdFv1bbfOdEAAAAd/user-icons.gif";
-
-type KeyValuePairProps = {
-  label: string;
-  value: string;
-};
-const KeyValuePair = ({ label, value }: KeyValuePairProps) => {
-  return (
-    <div className={styles.KeyValuePair}>
-      <div className={styles.Label}>{label} :</div>
-      <div className={styles.Value}>{value}</div>
-    </div>
-  );
-};
 
 type ProfileProps = {
   user: UserType;
@@ -42,7 +30,7 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
 
   return (
     <div className={styles.Profile}>
-      <div className={styles.ProfileHeader}>
+      <div className={styles.ProfileHeader + " borderbox"}>
         <div>
           <img
             src={user?.pfp ?? defaultPfp}
