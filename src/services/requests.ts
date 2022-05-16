@@ -7,10 +7,6 @@ export const albumsApi = "https://rostov-gateway.herokuapp.com/songs/albums/";
 export const playlistsApi =
   "https://rostov-gateway.herokuapp.com/songs/playlists/";
 
-export const jsonFetcher = (url: string) => {
-  return fetch(url).then((response) => response.json());
-};
-
 export const authFetcher = (auth: string) => (url: string) => {
   return (
     auth &&
@@ -29,12 +25,12 @@ export const useAuthFetcher = () => {
   return { authFetcher: _authFetcher, token };
 };
 
-export const setRole = async (uid: string, role: string) => {
+export const setRole = async (uid: string, role: string, token: string) => {
   const response = await fetch(`${authApi}/setRole/${uid}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      //"Authorization": `Bearer ${token}`
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       role: role,
@@ -42,4 +38,10 @@ export const setRole = async (uid: string, role: string) => {
   });
   const json = await response.json();
   return json;
+};
+
+export const useSetRole = () => {
+  const auth = useAuthUser() as any;
+  const token = auth?.firebaseUser?.accessToken as string;
+  return (uid: string, role: string) => setRole(uid, role, token);
 };

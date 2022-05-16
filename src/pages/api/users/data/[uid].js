@@ -1,7 +1,11 @@
 import { getAuth } from "firebase-admin/auth";
+import isAdmin from "../../../../server/isAdmin";
 
 const handler = async (req, res) => {
   const { uid } = req.query;
+
+  if (!(await isAdmin(req, res)))
+    return res.status(403).json({ error: "Unauthorized" });
 
   try {
     const user = await getAuth().getUser(uid);

@@ -10,7 +10,7 @@ import {
 } from "next-firebase-auth";
 
 import styles from "../../styles/Home.module.css";
-import { authApi, jsonFetcher } from "../../services/requests";
+import { authApi, useAuthFetcher } from "../../services/requests";
 import useSwr from "swr";
 import RoleButton from "../../components/Users/RoleButton";
 
@@ -41,7 +41,12 @@ const columns = [
   },
 ];
 const Users: any = () => {
-  const { data, isValidating: loading, error } = useSwr(authApi, jsonFetcher);
+  const { authFetcher, token } = useAuthFetcher();
+  const {
+    data,
+    isValidating: loading,
+    error,
+  } = useSwr(token ? authApi : null, authFetcher);
   const users = data?.users;
 
   return (

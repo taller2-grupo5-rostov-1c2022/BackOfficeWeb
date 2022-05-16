@@ -1,10 +1,5 @@
 import { useRouter } from "next/router";
-import {
-  usersApi,
-  authApi,
-  useAuthFetcher,
-  jsonFetcher,
-} from "../../services/requests";
+import { usersApi, authApi, useAuthFetcher } from "../../services/requests";
 import useSwr from "swr";
 import {
   AuthAction,
@@ -28,7 +23,7 @@ const User = () => {
     data: authUser,
     isValidating: authUser_loading,
     error: authUser_error,
-  } = useSwr(uid ? authApi + "/data/" + uid : null, jsonFetcher);
+  } = useSwr(uid ? authApi + "/data/" + uid : null, authFetcher);
 
   return (
     <div className={styles.container}>

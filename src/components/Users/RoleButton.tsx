@@ -1,13 +1,15 @@
 import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { setRole } from "../../services/requests";
+import { useSetRole } from "../../services/requests";
 import { AuthUserType } from "../../util/types";
 
 type RoleButtonProps = {
   user: AuthUserType;
 };
 const RoleButton = ({ user }: RoleButtonProps) => {
+  const setRole = useSetRole();
+
   const [currentRole, setCurrentRole] = useState(
     user?.customClaims?.role ?? "listener"
   );

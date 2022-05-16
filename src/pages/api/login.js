@@ -1,12 +1,9 @@
 import { setAuthCookies } from "next-firebase-auth";
 import initAuth from "../../server/initAuth";
+import isAdmin from "../../server/isAdmin";
 import { getAuth } from "firebase-admin/auth";
 
 initAuth();
-
-const isAdmin = (user) => {
-  return user?.role === "admin";
-};
 
 const handler = async (req, res) => {
   try {
@@ -21,11 +18,8 @@ const handler = async (req, res) => {
       return res.status(200).json({ success: true });
     }
 
-    const token = req?.headers?.authorization;
-    if (!token) return res.status(403).json({ error: "Unauthorized" });
-    const user = await getAuth().verifyIdToken(token);
-
-    if (!isAdmin(user)) return res.status(403).json({ error: "Unauthorized" });
+    if (!(await isAdmin(req, res)))
+      return res.status(403).json({ error: "Unauthorized" });
 
     await setAuthCookies(req, res);
     return res.status(200).json({ success: true });

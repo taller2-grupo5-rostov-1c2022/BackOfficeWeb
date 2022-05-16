@@ -177,7 +177,7 @@ const ResponsiveAppBar = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar
-                  alt="Remy Sharp"
+                  alt={authUser?.displayName ?? "admin"}
                   src={authUser?.photoURL ?? "/static/user"}
                 />
               </IconButton>
