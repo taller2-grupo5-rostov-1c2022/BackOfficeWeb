@@ -14,6 +14,28 @@ import MenuItem from "@mui/material/MenuItem";
 import Link from "next/link";
 import { withAuthUser, useAuthUser } from "next-firebase-auth";
 import { logOut } from "../../client/auth";
+import styles from "./Nav.module.css";
+import { useRouter } from "next/router";
+
+const NavLink = ({
+  url,
+  children,
+}: {
+  url: string;
+  children: React.ReactNode;
+}) => {
+  const router = useRouter();
+  const currentRoute = router.pathname;
+  const isActive = currentRoute.startsWith(url);
+
+  return (
+    <Link href={url}>
+      <a className={styles.NavLink} aria-selected={isActive}>
+        {children}
+      </a>
+    </Link>
+  );
+};
 
 const ResponsiveAppBar = () => {
   const authUser = useAuthUser();
@@ -51,8 +73,7 @@ const ResponsiveAppBar = () => {
     },
     {
       label: "Métricas",
-      url: "/",
-      //url: "/metrics",
+      url: "/metrics",
     },
   ];
   const _settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -78,14 +99,18 @@ const ResponsiveAppBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            LOGO
-          </Typography>
+          <Link href="/">
+            <a>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+              >
+                LOGO
+              </Typography>
+            </a>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -137,16 +162,14 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map(({ label, url }, i) => (
-              <Link href={url} key={i}>
-                <a>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {label}
-                  </Button>
-                </a>
-              </Link>
+              <NavLink url={url} key={i}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 0, color: "white", display: "block" }}
+                >
+                  {label}
+                </Button>
+              </NavLink>
             ))}
           </Box>
 
