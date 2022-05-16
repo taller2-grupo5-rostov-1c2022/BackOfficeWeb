@@ -16,9 +16,9 @@ const Playlist = ({ playlist, loading, error }: PlaylistProps) => {
   }
 
   return (
-    <div className={styles.playlist}>
-      <h1>{playlist?.name}</h1>
+    <div className={styles.Playlist}>
       <div className={" borderbox"}>
+        <h1>{playlist?.name}</h1>
         <KeyValuePair label="Description" value={playlist?.description} />
         <KeyValuePair label="Creator" value={playlist?.creator_id} />
       </div>

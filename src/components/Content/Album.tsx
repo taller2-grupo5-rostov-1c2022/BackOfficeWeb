@@ -17,7 +17,6 @@ const Album = ({ album, loading, error }: AlbumProps) => {
 
   return (
     <div className={styles.Album}>
-      <h1>{album?.name}</h1>
       <div className={styles.header + " borderbox"}>
         <div>
           <img
@@ -28,10 +27,15 @@ const Album = ({ album, loading, error }: AlbumProps) => {
           />
         </div>
         <div className={styles.data}>
+          <h1>{album?.name}</h1>
           <KeyValuePair label="Description" value={album?.description} />
           <KeyValuePair label="Genre" value={album?.genre} />
           <KeyValuePair label="Subscription" value={album?.sub_level} />
-          <KeyValuePair label="Creator" value={album?.creator_id} />
+          <KeyValuePair
+            label="Creator"
+            value={album?.album_creator_id}
+            url={"/users/user?uid=" + album?.album_creator_id}
+          />
         </div>
       </div>
       <h2>Songs</h2>

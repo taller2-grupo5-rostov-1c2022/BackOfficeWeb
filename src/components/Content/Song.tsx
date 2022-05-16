@@ -16,8 +16,8 @@ const Song = ({ song, loading, error }: SongProps) => {
 
   return (
     <div className={styles.Song}>
-      <h1>{song?.name}</h1>
       <div className="borderbox">
+        <h1>{song?.name}</h1>
         <KeyValuePair label="Description" value={song?.description} />
         <KeyValuePair label="Genre" value={song?.genre} />
         <KeyValuePair

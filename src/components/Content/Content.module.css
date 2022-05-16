@@ -1,3 +1,15 @@
+.Song,
+.Album,
+.Playlist {
+  padding: 20px 2rem;
+}
+
+.Song h1,
+.Album h1,
+.Playlist h1 {
+  margin-top: 0;
+}
+
 .header {
   display: flex;
   align-items: center;

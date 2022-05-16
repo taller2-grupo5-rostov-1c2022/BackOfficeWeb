@@ -23,7 +23,7 @@ const AlbumsList = ({ albums }: { albums: AlbumType[] }) => {
       minWidth: 150,
       flex: 1,
       valueGetter: ({ row: album }: any) =>
-        album?.songs?.map(({ id, name }: any) => `${name} [${id}]`).join(", "),
+        album?.songs?.map(({ name }: any) => name).join(", "),
     },
     {
       field: "detail",
