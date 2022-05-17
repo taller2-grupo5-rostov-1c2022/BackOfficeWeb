@@ -23,7 +23,7 @@ const User = () => {
     data: authUser,
     isValidating: authUser_loading,
     error: authUser_error,
-  } = useSwr(uid ? authApi + "/data/" + uid : null, authFetcher);
+  } = useSwr(token ? authApi + "/data/" + uid : null, authFetcher);
 
   return (
     <div className={styles.container}>

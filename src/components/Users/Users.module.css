@@ -11,10 +11,17 @@
   display: flex;
   align-items: center;
   gap: 30px;
+  position: relative;
 }
 .ProfileHeader h1 {
   margin-top: 0;
 }
 .ProfileHeader img {
   border-radius: 50%;
+}
+
+.disabledButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

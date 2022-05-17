@@ -6,6 +6,7 @@ import styles from "./Users.module.css";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import SongsList from "../Content/SongsList";
 import AlbumsList from "../Content/AlbumsLists";
+import DisabledButton from "./DisableButton";
 
 const defaultPfp = "https://c.tenor.com/XdFv1bbfOdEAAAAd/user-icons.gif";
 
@@ -50,16 +51,15 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
             label="Last Sign In"
             value={authUser?.metadata?.lastSignInTime}
           />
-          <KeyValuePair
-            label="Disabled"
-            value={authUser?.disabled ? "Yes" : "No"}
-          />
           <KeyValuePair label="Location" value={user?.location} />
           <KeyValuePair
             label="Interests"
             value={parseArray(user?.interests).join(", ")}
           />
           <KeyValuePair label="Wallet" value={user?.wallet} />
+        </div>
+        <div className={styles.disabledButton}>
+          <DisabledButton user={authUser} />
         </div>
       </div>
 

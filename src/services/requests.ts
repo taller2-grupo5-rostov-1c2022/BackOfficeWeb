@@ -25,23 +25,37 @@ export const useAuthFetcher = () => {
   return { authFetcher: _authFetcher, token };
 };
 
-export const setRole = async (uid: string, role: string, token: string) => {
-  const response = await fetch(`${authApi}/setRole/${uid}`, {
+const post = async (url: string, body: {}, token: string) => {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      role: role,
+      ...body,
     }),
   });
   const json = await response.json();
   return json;
 };
 
+const setRole = async (uid: string, role: string, token: string) => {
+  return post(`${authApi}/setRole/${uid}`, { role }, token);
+};
+
 export const useSetRole = () => {
   const auth = useAuthUser() as any;
   const token = auth?.firebaseUser?.accessToken as string;
   return (uid: string, role: string) => setRole(uid, role, token);
+};
+
+const setDisabled = async (uid: string, disabled: boolean, token: string) => {
+  return post(`${authApi}/setDisabled/${uid}`, { disabled }, token);
+};
+
+export const useSetDisabled = () => {
+  const auth = useAuthUser() as any;
+  const token = auth?.firebaseUser?.accessToken as string;
+  return (uid: string, disabled: boolean) => setDisabled(uid, disabled, token);
 };
