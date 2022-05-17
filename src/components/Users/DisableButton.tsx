@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useSetDisabled } from "../../services/requests";
@@ -19,6 +19,10 @@ const DisabledButton = ({ user }: DisabledButtonProps) => {
     const res = await setDisabled(user?.uid, disabled);
     setCurrentDisabled(res.disabled);
   };
+
+  useEffect(() => {
+    setCurrentDisabled(user?.disabled);
+  }, [user]);
 
   return (
     <Button
