@@ -14,7 +14,9 @@ const initAuth = () => {
     logoutAPIEndpoint: "/api/logout", // required
     onLoginRequestError: (err) => {
       logOut();
-      toast.error("User is not an admin");
+      toast.error("User is not an admin", {
+        toastId: "User is not an admin",
+      });
     },
     onLogoutRequestError: (err) => {
       console.error(err);
