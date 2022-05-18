@@ -59,3 +59,25 @@ export const useSetDisabled = () => {
   const token = auth?.firebaseUser?.accessToken as string;
   return (uid: string, disabled: boolean) => setDisabled(uid, disabled, token);
 };
+
+type contentType = "song" | "album" | "playlist";
+const contentEndpoint = {
+  song: songsApi,
+  album: albumsApi,
+  playlist: playlistsApi,
+};
+const setContentDisabled = async (
+  id: string | number,
+  blocked: boolean,
+  type: contentType,
+  token: string
+) => {
+  return post(`${contentEndpoint[type]}/${id}`, { blocked }, token);
+};
+
+export const useSetContentDisabled = () => {
+  const auth = useAuthUser() as any;
+  const token = auth?.firebaseUser?.accessToken as string;
+  return (id: string | number, disabled: boolean, type: contentType) =>
+    setContentDisabled(id, disabled, type, token);
+};

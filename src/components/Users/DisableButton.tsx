@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useSetDisabled } from "../../services/requests";
 import { AuthUserType } from "../../util/types";
