@@ -2,6 +2,7 @@ import { PlaylistType } from "../../util/types";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
 import SongsList from "./SongsList";
+import DisableButton from "./DisableButton";
 
 type PlaylistProps = {
   playlist: PlaylistType;
@@ -21,6 +22,13 @@ const Playlist = ({ playlist, loading, error }: PlaylistProps) => {
         <h1>{playlist?.name}</h1>
         <KeyValuePair label="Description" value={playlist?.description} />
         <KeyValuePair label="Creator" value={playlist?.creator_id} />
+        <div className={styles.disabledButton}>
+          <DisableButton
+            id={playlist?.id}
+            isDisabled={playlist?.blocked}
+            type={"playlist"}
+          />
+        </div>
       </div>
       <h2>Songs</h2>
       <SongsList songs={playlist?.songs ?? []} />

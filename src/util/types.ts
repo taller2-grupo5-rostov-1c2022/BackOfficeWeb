@@ -10,6 +10,7 @@ export type SongType = {
   artists: {
     name: string;
   }[];
+  blocked: boolean;
 };
 
 export type AlbumType = {
@@ -21,6 +22,7 @@ export type AlbumType = {
   sub_level: number;
   songs: SongType[];
   cover: string;
+  blocked: boolean;
 };
 
 export type PlaylistType = {
@@ -29,6 +31,7 @@ export type PlaylistType = {
   description: string;
   creator_id: number | string;
   songs?: SongType[];
+  blocked: boolean;
 };
 
 export type UserType = {

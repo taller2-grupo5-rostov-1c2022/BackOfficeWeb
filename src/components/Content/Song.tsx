@@ -1,6 +1,7 @@
 import { SongType } from "../../util/types";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
+import DisableButton from "./DisableButton";
 
 type SongProps = {
   song: SongType;
@@ -29,6 +30,13 @@ const Song = ({ song, loading, error }: SongProps) => {
           value={song?.album?.name}
           url={"/content/album?id=" + song?.album?.id}
         />
+        <div className={styles.disabledButton}>
+          <DisableButton
+            id={song?.id}
+            isDisabled={song?.blocked}
+            type={"song"}
+          />
+        </div>
       </div>
     </div>
   );

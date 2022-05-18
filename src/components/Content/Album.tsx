@@ -2,6 +2,7 @@ import { AlbumType } from "../../util/types";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
 import SongsList from "./SongsList";
+import DisableButton from "./DisableButton";
 
 type AlbumProps = {
   album: AlbumType;
@@ -35,6 +36,13 @@ const Album = ({ album, loading, error }: AlbumProps) => {
             label="Creator"
             value={album?.album_creator_id}
             url={"/users/user?uid=" + album?.album_creator_id}
+          />
+        </div>
+        <div className={styles.disabledButton}>
+          <DisableButton
+            id={album?.id}
+            isDisabled={album?.blocked}
+            type={"album"}
           />
         </div>
       </div>

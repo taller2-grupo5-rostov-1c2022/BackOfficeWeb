@@ -39,6 +39,30 @@ const post = async (url: string, body: {}, token: string) => {
   const json = await response.json();
   return json;
 };
+const put = async (
+  url: string,
+  body: { [key: string]: string | number | boolean },
+  token: string
+) => {
+  let formData = new FormData();
+  for (let key in body) {
+    formData.append(key, String(body[key]));
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+    const json = await response.json();
+    return json;
+  } catch (e) {
+    throw e;
+  }
+};
 
 const setRole = async (uid: string, role: string, token: string) => {
   return post(`${authApi}/setRole/${uid}`, { role }, token);
@@ -72,7 +96,7 @@ const setContentDisabled = async (
   type: contentType,
   token: string
 ) => {
-  return post(`${contentEndpoint[type]}/${id}`, { blocked }, token);
+  return put(contentEndpoint[type] + id, { blocked }, token);
 };
 
 export const useSetContentDisabled = () => {

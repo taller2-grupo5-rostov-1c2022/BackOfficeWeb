@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useSetContentDisabled } from "../../services/requests";
+import { toast } from "react-toastify";
 
 type DisabledButtonProps = {
   isDisabled: boolean;
@@ -13,9 +14,12 @@ const DisabledButton = ({ isDisabled, id, type }: DisabledButtonProps) => {
   const [currentDisabled, setCurrentDisabled] = useState(isDisabled ?? false);
 
   const _setDisabled = async (disabled: boolean) => {
-    // const res = await setDisabled(id, disabled, type);
-
-    setCurrentDisabled(disabled);
+    try {
+      await setDisabled(id, disabled, type);
+      setCurrentDisabled(disabled);
+    } catch (error: any) {
+      toast.error(error?.message);
+    }
   };
 
   useEffect(() => {

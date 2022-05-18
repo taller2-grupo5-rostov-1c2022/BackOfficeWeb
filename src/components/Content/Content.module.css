@@ -20,3 +20,9 @@
   border-radius: 4px;
   box-shadow: 0 0 1px 0 #0003;
 }
+
+.disabledButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

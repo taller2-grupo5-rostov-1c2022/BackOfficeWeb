@@ -30,6 +30,7 @@ a {
   padding: 1rem;
   border: 1px solid #0002;
   border-radius: 4px;
+  position: relative;
 }
 
 .w80 {

@@ -19,13 +19,13 @@ type ProfileProps = {
 const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
   if (!user && !authUser) {
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (error) return <div>Error: {error?.message}</div>;
     return <div>User not found</div>;
   }
 
   if (authUser && !user) {
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (error) return <div>Error: {error?.message}</div>;
     return <div>User {authUser?.email ?? authUser?.uid} has no profile</div>;
   }
 
