@@ -3,6 +3,7 @@ import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
 import SongsList from "./SongsList";
 import DisableButton from "./DisableButton";
+import CommentsList from "./CommentsList";
 
 type AlbumProps = {
   album: AlbumType;
@@ -48,6 +49,8 @@ const Album = ({ album, loading, error }: AlbumProps) => {
       </div>
       <h2>Songs</h2>
       <SongsList songs={album?.songs} />
+      <h2>Comments</h2>
+      <CommentsList albumId={album?.id} />
     </div>
   );
 };
