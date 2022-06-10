@@ -64,19 +64,18 @@ const ResponsiveAppBar = () => {
 
   const pages = [
     {
-      label: "Usuarios",
+      label: "Users",
       url: "/users/users",
     },
     {
-      label: "Contenido",
-      url: "/content",
+      label: "Content",
+      url: "/content/songs",
     },
     {
-      label: "Métricas",
-      url: "/metrics",
+      label: "Metrics",
+      url: "/metrics/users",
     },
   ];
-  const _settings = ["Profile", "Account", "Dashboard", "Logout"];
   const settings = [
     {
       label: "Profile",

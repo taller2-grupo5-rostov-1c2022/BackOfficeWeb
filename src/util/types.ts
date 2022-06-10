@@ -58,5 +58,9 @@ export type AuthUserType = {
     creationTime: string;
     lastSignInTime: string;
   };
+  providerData: {
+    providerId: "password" | "google.com" | string;
+    rest: any[];
+  }[];
   rest: any[];
 };

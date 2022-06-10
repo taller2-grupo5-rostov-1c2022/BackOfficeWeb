@@ -12,7 +12,8 @@ const Content: any = () => {
     <div className={styles.container}>
       <MetricsNav />
       <main className={styles.main}>
-        <h2>Welcome to the Metrics Page</h2>
+        <h2>Welcome to the Content Metrics Page</h2>
+        <h4>There is nothing to see here</h4>
       </main>
     </div>
   );

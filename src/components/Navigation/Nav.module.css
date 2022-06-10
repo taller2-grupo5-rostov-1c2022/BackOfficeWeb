@@ -1,4 +1,4 @@
-.ContentNav {
+.SubNav {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -6,19 +6,19 @@
   gap: 1rem;
 }
 
-.ContentNav a {
+.SubNav a {
   text-align: center;
   font-size: 20px;
   border-bottom: 1px solid #0002;
   color: #0008;
   padding: 0.5rem 0;
 }
-.ContentNav a:hover {
+.SubNav a:hover {
   border-bottom: 1px solid #0008;
   color: #000d;
 }
 
-.ContentNav a[aria-selected="true"] {
+.SubNav a[aria-selected="true"] {
   border-bottom: 1px solid #1a76d2;
   color: #1a76d2;
   font-weight: 600;

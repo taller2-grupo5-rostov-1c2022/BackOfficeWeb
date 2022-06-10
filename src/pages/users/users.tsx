@@ -40,7 +40,7 @@ const columns = [
   },
 ];
 const Users: any = () => {
-  const { data, isValidating: loading, error } = useAuthSWR(authApi);
+  const { data, loading, error } = useAuthSWR(authApi);
   const users = data?.users;
 
   return (

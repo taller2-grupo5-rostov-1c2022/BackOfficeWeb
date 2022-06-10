@@ -33,7 +33,10 @@ export const useAuthSWR = (route: string | null) => {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-  return fetchedData;
+  return {
+    ...fetchedData,
+    loading: !fetchedData?.data && fetchedData?.isValidating,
+  };
 };
 
 const post = async (url: string, body: {}, token: string) => {
