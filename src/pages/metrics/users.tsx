@@ -3,29 +3,27 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
+import { useMemo } from "react";
+import { userMetrics } from "../../client/metrics";
 import MetricsNav from "../../components/Navigation/MetricsNav";
 import { useAuthSWR, authApi } from "../../services/requests";
 
 import styles from "../../styles/Home.module.css";
+import Metrics from "../../components/Metrics/Metrics";
 
-const Metrics: any = () => {
+const UserMetrics: any = () => {
   const { data, loading, error } = useAuthSWR(authApi);
   const users = data?.users;
+
+  const metrics = useMemo(() => userMetrics(users), [users]);
 
   return (
     <div className={styles.container}>
       <MetricsNav />
+      {loading ? "LOADING..." : null}
+      {error ? "ERROR" : null}
       <main className={styles.main}>
-        <h2>Welcome to the User Metrics Page</h2>
-        {loading ? "LOADING..." : null}
-        {error ? "ERROR" : null}
-        <button
-          onClick={() => {
-            console.log(users);
-          }}
-        >
-          CLICK
-        </button>
+        <Metrics metrics={metrics} />
       </main>
     </div>
   );
@@ -37,4 +35,4 @@ export const getServerSideProps = withAuthUserTokenSSR({
 
 export default withAuthUser({
   whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-})(Metrics);
+})(UserMetrics);

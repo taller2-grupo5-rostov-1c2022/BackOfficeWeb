@@ -1,0 +1,20 @@
+.Details {
+  margin: 10px 0;
+}
+.Details * {
+  margin: 0;
+}
+.Details h3 {
+  color: #0008;
+}
+
+.DataContainer {
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column;
+}
+.DataContainer .Data {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}

@@ -59,8 +59,27 @@ export type AuthUserType = {
     lastSignInTime: string;
   };
   providerData: {
-    providerId: "password" | "google.com" | string;
+    providerId: string;
     rest: any[];
   }[];
   rest: any[];
+};
+
+export type MetricsData = {
+  total: number;
+  disabled: number;
+  provider: {
+    [p: string]: number;
+  };
+  role: {
+    [r: string]: number;
+  };
+  new: {
+    // created in the last n days
+    [days: number]: number;
+  };
+  signedIn: {
+    // signed in in the last n days
+    [days: number]: number;
+  };
 };
