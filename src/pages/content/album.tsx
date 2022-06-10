@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
-import { albumsApi, useAuthFetcher } from "../../services/requests";
+import { albumsApi, useAuthSWR } from "../../services/requests";
 import AlbumData from "../../components/Content/Album";
-import useSwr from "swr";
 import {
   AuthAction,
   withAuthUser,
@@ -11,14 +10,13 @@ import styles from "../../styles/Home.module.css";
 
 const Album = () => {
   const router = useRouter();
-  const { authFetcher, token } = useAuthFetcher();
   const id = router?.query?.id as string;
 
   const {
     data: album,
     isValidating: loading,
     error,
-  } = useSwr(token ? albumsApi + id : null, authFetcher);
+  } = useAuthSWR(id ? albumsApi + id : null);
 
   return (
     <div className={styles.container}>

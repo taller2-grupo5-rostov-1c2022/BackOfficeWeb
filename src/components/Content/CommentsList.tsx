@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { DataGrid } from "@mui/x-data-grid";
-import { useAuthFetcher, albumsApi } from "../../services/requests";
-import useSwr from "swr";
+import { useAuthSWR, albumsApi } from "../../services/requests";
 
 const CommenterLink = ({ row: comment }: any) => (
   <Link href={`/users/user?uid=${comment?.commenter?.id}`}>
@@ -10,16 +9,11 @@ const CommenterLink = ({ row: comment }: any) => (
 );
 
 const CommentsList = ({ albumId }: { albumId: string | number }) => {
-  const { authFetcher, token } = useAuthFetcher();
-
   const {
     data: comments,
     isValidating: loading,
     error,
-  } = useSwr(
-    token && albumId ? albumsApi + albumId + "/comments/" : null,
-    authFetcher
-  );
+  } = useAuthSWR(albumId ? albumsApi + albumId + "/comments/" : null);
 
   const columns = [
     { field: "score", headerName: "Score", minWidth: 50, flex: 1 },

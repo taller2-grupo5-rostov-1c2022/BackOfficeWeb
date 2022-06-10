@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
-import { playlistsApi, useAuthFetcher } from "../../services/requests";
+import { playlistsApi, useAuthSWR } from "../../services/requests";
 import PlaylistData from "../../components/Content/Playlist";
-import useSwr from "swr";
 import {
   AuthAction,
   withAuthUser,
@@ -11,14 +10,13 @@ import styles from "../../styles/Home.module.css";
 
 const Playlist = () => {
   const router = useRouter();
-  const { authFetcher, token } = useAuthFetcher();
   const id = router?.query?.id as string;
 
   const {
     data: playlist,
     isValidating: loading,
     error,
-  } = useSwr(token ? playlistsApi + id : null, authFetcher);
+  } = useAuthSWR(id ? playlistsApi + id : null);
 
   return (
     <div className={styles.container}>

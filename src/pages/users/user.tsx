@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import { usersApi, authApi, useAuthFetcher } from "../../services/requests";
-import useSwr from "swr";
+import { usersApi, authApi, useAuthSWR } from "../../services/requests";
 import {
   AuthAction,
   withAuthUser,
@@ -11,19 +10,18 @@ import Profile from "../../components/Users/Profile";
 
 const User = () => {
   const router = useRouter();
-  const { authFetcher, token } = useAuthFetcher();
   const uid = router?.query?.uid as string;
 
   const {
     data: user,
     isValidating: user_loading,
     error: user_error,
-  } = useSwr(token ? usersApi + uid : null, authFetcher);
+  } = useAuthSWR(uid ? usersApi + uid : null);
   const {
     data: authUser,
     isValidating: authUser_loading,
     error: authUser_error,
-  } = useSwr(token ? authApi + "/data/" + uid : null, authFetcher);
+  } = useAuthSWR(uid ? authApi + "/data/" + uid : null);
 
   return (
     <div className={styles.container}>

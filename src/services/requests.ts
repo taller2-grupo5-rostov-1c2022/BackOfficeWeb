@@ -1,4 +1,5 @@
 import { useAuthUser } from "next-firebase-auth";
+import defaultSwr from "swr";
 
 export const authApi = "/api/users";
 export const usersApi = "https://rostov-gateway.herokuapp.com/songs/users/";
@@ -23,6 +24,16 @@ export const useAuthFetcher = () => {
   const token = auth?.firebaseUser?.accessToken as string;
   const _authFetcher = authFetcher(token);
   return { authFetcher: _authFetcher, token };
+};
+
+export const useAuthSWR = (route: string | null) => {
+  const { authFetcher, token } = useAuthFetcher();
+  const fetchedData = defaultSwr(token ? route : null, authFetcher, {
+    // revalidateIfStale: false, // revalidates on mount
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
+  return fetchedData;
 };
 
 const post = async (url: string, body: {}, token: string) => {

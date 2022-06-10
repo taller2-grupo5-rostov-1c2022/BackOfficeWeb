@@ -1,23 +1,19 @@
-import { DataGrid } from "@mui/x-data-grid";
 import {
   AuthAction,
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import styles from "../../styles/Home.module.css";
-import { playlistsApi, useAuthFetcher } from "../../services/requests";
-import useSwr from "swr";
+import { playlistsApi, useAuthSWR } from "../../services/requests";
 import ContentNav from "../../components/Navigation/ContentNav";
 import PlaylistsList from "../../components/Content/PlaylistsLists";
 
 const Playlists: any = () => {
-  const { authFetcher, token } = useAuthFetcher();
-
   const {
     data: playlists,
     isValidating: loading,
     error,
-  } = useSwr(token ? playlistsApi : null, authFetcher);
+  } = useAuthSWR(playlistsApi);
 
   return (
     <div className={styles.container}>

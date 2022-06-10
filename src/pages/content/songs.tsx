@@ -4,19 +4,12 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import styles from "../../styles/Home.module.css";
-import { songsApi, useAuthFetcher } from "../../services/requests";
-import useSwr from "swr";
+import { songsApi, useAuthSWR } from "../../services/requests";
 import ContentNav from "../../components/Navigation/ContentNav";
 import SongsList from "../../components/Content/SongsList";
 
 const Songs: any = () => {
-  const { authFetcher, token } = useAuthFetcher();
-
-  const {
-    data: songs,
-    isValidating: loading,
-    error,
-  } = useSwr(token ? songsApi : null, authFetcher);
+  const { data: songs, isValidating: loading, error } = useAuthSWR(songsApi);
 
   return (
     <div className={styles.container}>
