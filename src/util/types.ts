@@ -65,21 +65,28 @@ export type AuthUserType = {
   rest: any[];
 };
 
+type MetricsDatum = {
+  total: number;
+  details?: {
+    [d: string]: number;
+  };
+};
+
 export type MetricsData = {
   total: number;
   disabled: number;
   provider: {
-    [p: string]: number;
+    [p: string]: MetricsDatum;
   };
   role: {
-    [r: string]: number;
+    [r: string]: MetricsDatum;
   };
   new: {
     // created in the last n days
-    [days: number]: number;
+    [days: string]: MetricsDatum;
   };
   signedIn: {
     // signed in in the last n days
-    [days: number]: number;
+    [days: string]: MetricsDatum;
   };
 };

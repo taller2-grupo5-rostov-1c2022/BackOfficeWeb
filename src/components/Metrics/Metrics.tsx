@@ -36,18 +36,22 @@ const customUserTable = (
               if (!sortTable) return 0;
               return (
                 // @ts-ignore
-                metrics?.[atribute]?.[value2] - metrics?.[atribute]?.[value1]
+                metrics?.[atribute]?.[value2]?.total -
+                // @ts-ignore
+                metrics?.[atribute]?.[value1]?.total
               );
             })
             .map((value, i) => {
               // @ts-ignore
-              const n = metrics?.[atribute]?.[value];
+              const datum = metrics?.[atribute]?.[value];
+              const total = datum?.total;
+              const title = datum?.details?.description ?? null;
               return (
-                <TableRow key={i}>
+                <TableRow key={i} title={title}>
                   <TableCell>{transformLabel(value)}</TableCell>
-                  <TableCell>{n}</TableCell>
+                  <TableCell>{total}</TableCell>
                   <TableCell>
-                    {((n / metrics.total) * 100)?.toFixed(2)} %
+                    {((total / metrics.total) * 100)?.toFixed(2)} %
                   </TableCell>
                 </TableRow>
               );
@@ -109,6 +113,8 @@ const TimeData = ({ metrics }: SectionProps) => {
 const Metrics = ({ metrics }: Props) => {
   if (!metrics) return null;
 
+  const debug = true;
+
   return (
     <>
       <Details metrics={metrics} />
@@ -116,6 +122,9 @@ const Metrics = ({ metrics }: Props) => {
         <Classification metrics={metrics} />
         <TimeData metrics={metrics} />
       </Container>
+      {debug && (
+        <button onClick={() => console.log(metrics)}>[DEBUG LOG]</button>
+      )}
     </>
   );
 };

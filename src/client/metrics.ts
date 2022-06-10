@@ -1,3 +1,4 @@
+import { defineReadOnly } from "ethers/lib/utils";
 import { AuthUserType, MetricsData } from "../util/types";
 
 const daysAgo = [1, 3, 7, 15, 30].map((days) => {
@@ -27,22 +28,81 @@ export const userMetrics = (users: AuthUserType[]) => {
     const provider = user?.providerData[0]?.providerId;
     const role = user?.customClaims?.role ?? "listener";
 
-    // @ts-ignore
-    ++data.provider[provider] || (data.provider[provider] = 1);
+    if (!data.provider[provider])
+      data.provider[provider] = {
+        total: 0,
+        details: {},
+      };
+    ++data.provider[provider].total;
 
-    // @ts-ignore
-    ++data.role[role] || (data.role[role] = 1);
+    if (!data.role[role])
+      data.role[role] = {
+        total: 0,
+        details: {},
+      };
+    ++data.role[role].total;
 
     const creation = new Date(user?.metadata?.creationTime ?? null);
     const signIn = new Date(user?.metadata?.lastSignInTime ?? null);
 
     daysAgo.forEach(({ days, date }) => {
-      if (creation >= date)
+      const str_days = String(days);
+      if (creation >= date) {
+        if (!data.new[str_days])
+          data.new[str_days] = {
+            total: 0,
+            details: {},
+          };
+        const details = data.new[str_days].details;
+        ++data.new[str_days].total;
         // @ts-ignore
-        ++data.new[String(days)] || (data.new[String(days)] = 1);
-      if (signIn >= date)
+        ++details["r " + role] || (details["r " + role] = 1);
         // @ts-ignore
-        ++data.signedIn[String(days)] || (data.signedIn[String(days)] = 1);
+        ++details["p " + provider] || (details["p " + provider] = 1);
+      }
+      if (signIn >= date) {
+        if (!data.signedIn[str_days])
+          data.signedIn[str_days] = {
+            total: 0,
+            details: {},
+          };
+        const details = data.signedIn[str_days].details;
+        ++data.signedIn[str_days].total;
+        // @ts-ignore
+        ++details["r " + role] || (details["r " + role] = 1);
+        // @ts-ignore
+        ++details["p " + provider] || (details["p " + provider] = 1);
+      }
+    });
+  });
+
+  ["new", "signedIn"].forEach((att) => {
+    daysAgo.forEach(({ days }) => {
+      // @ts-ignore
+      const details = data[att][days].details;
+      details.roles = {};
+      details.providers = {};
+
+      Object.keys(details).forEach((key) => {
+        if (key === "roles" || key === "providers") return;
+
+        const [type, name] = key?.split(" ");
+
+        if (type === "p") details.providers[name] = details[key];
+
+        if (type === "r") details.roles[name] = details[key];
+      });
+
+      details.description = "Providers";
+      Object.keys(details.providers).forEach((provider) => {
+        details.description +=
+          "\n• " + details.providers[provider] + " using " + provider;
+      });
+      details.description += "\nRoles";
+      Object.keys(details.roles).forEach((role) => {
+        const s = details.roles[role] > 1 ? "s" : "";
+        details.description += "\n• " + details.roles[role] + " " + role + s;
+      });
     });
   });
 
