@@ -18,3 +18,16 @@
   display: flex;
   flex-direction: row;
 }
+
+.Data thead {
+  background-color: #1a76d2dd;
+}
+
+.Data th {
+  font-weight: bold;
+  color: #fff;
+}
+
+.Data tr:nth-child(2n) {
+  background-color: #9991;
+}

@@ -16,7 +16,8 @@ const customUserTable = (
   metrics: MetricsData,
   title: string,
   atribute: string,
-  transformLabel: (s: string) => string = (s) => s
+  transformLabel: (s: string) => string = (s) => s,
+  sortTable?: boolean
 ) => (
   <TableContainer component={Paper}>
     <Table>
@@ -30,19 +31,27 @@ const customUserTable = (
       <TableBody>
         {
           // @ts-ignore
-          Object.keys(metrics?.[atribute] ?? {}).map((value, i) => {
-            // @ts-ignore
-            const n = metrics?.[atribute]?.[value];
-            return (
-              <TableRow key={i}>
-                <TableCell>{transformLabel(value)}</TableCell>
-                <TableCell>{n}</TableCell>
-                <TableCell>
-                  {((n / metrics.total) * 100)?.toFixed(2)} %
-                </TableCell>
-              </TableRow>
-            );
-          })
+          Object.keys(metrics?.[atribute] ?? {})
+            .sort((value1: string, value2: string): number => {
+              if (!sortTable) return 0;
+              return (
+                // @ts-ignore
+                metrics?.[atribute]?.[value2] - metrics?.[atribute]?.[value1]
+              );
+            })
+            .map((value, i) => {
+              // @ts-ignore
+              const n = metrics?.[atribute]?.[value];
+              return (
+                <TableRow key={i}>
+                  <TableCell>{transformLabel(value)}</TableCell>
+                  <TableCell>{n}</TableCell>
+                  <TableCell>
+                    {((n / metrics.total) * 100)?.toFixed(2)} %
+                  </TableCell>
+                </TableRow>
+              );
+            })
         }
       </TableBody>
     </Table>
@@ -64,7 +73,7 @@ const Details = ({ metrics }: SectionProps) => {
 };
 const Classification = ({ metrics }: SectionProps) => {
   const display = (title: string, atribute: string) =>
-    customUserTable(metrics, title, atribute);
+    customUserTable(metrics, title, atribute, undefined, true);
 
   return (
     <Container className={styles.Data}>
