@@ -113,18 +113,18 @@ const TimeData = ({ metrics }: SectionProps) => {
 const Metrics = ({ metrics }: Props) => {
   if (!metrics) return null;
 
-  const debug = true;
+  const debug = false;
 
   return (
     <>
+      {debug && (
+        <button onClick={() => console.log(metrics)}>[DEBUG LOG]</button>
+      )}
       <Details metrics={metrics} />
       <Container className={styles.DataContainer}>
         <Classification metrics={metrics} />
         <TimeData metrics={metrics} />
       </Container>
-      {debug && (
-        <button onClick={() => console.log(metrics)}>[DEBUG LOG]</button>
-      )}
     </>
   );
 };
