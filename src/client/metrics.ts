@@ -1,4 +1,3 @@
-import { defineReadOnly } from "ethers/lib/utils";
 import { AuthUserType, MetricsData } from "../util/types";
 
 const daysAgo = [1, 3, 7, 15, 30].map((days) => {
