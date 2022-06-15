@@ -5,8 +5,9 @@ import RoleButton from "./RoleButton";
 import styles from "./Users.module.css";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import SongsList from "../Content/SongsList";
-import AlbumsList from "../Content/AlbumsLists";
+import AlbumsList from "../Content/AlbumsList";
 import DisabledButton from "./DisableButton";
+import { useGetSubName } from "../../services/requests";
 
 const defaultPfp = "https://c.tenor.com/XdFv1bbfOdEAAAAd/user-icons.gif";
 
@@ -17,6 +18,8 @@ type ProfileProps = {
   error: any;
 };
 const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
+  const getSubName = useGetSubName();
+
   if (!user && !authUser) {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error?.message}</div>;
@@ -55,6 +58,10 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
           <KeyValuePair
             label="Interests"
             value={parseArray(user?.interests).join(", ")}
+          />
+          <KeyValuePair
+            label="Subscription"
+            value={getSubName(user?.sub_level)}
           />
           <KeyValuePair label="Wallet" value={user?.wallet} />
         </div>

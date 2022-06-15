@@ -2,11 +2,13 @@ import { useAuthUser } from "next-firebase-auth";
 import defaultSwr from "swr";
 
 export const authApi = "/api/users";
-export const usersApi = "https://rostov-gateway.herokuapp.com/songs/users/";
-export const songsApi = "https://rostov-gateway.herokuapp.com/songs/songs/";
-export const albumsApi = "https://rostov-gateway.herokuapp.com/songs/albums/";
-export const playlistsApi =
-  "https://rostov-gateway.herokuapp.com/songs/playlists/";
+const _songs = "devsongs"; // prod: songs , dev: devsongs
+const monolith = `https://rostov-gateway.herokuapp.com/${_songs}`;
+export const usersApi = `${monolith}/users/`;
+export const songsApi = `${monolith}/songs/`;
+export const albumsApi = `${monolith}/albums/`;
+export const playlistsApi = `${monolith}/playlists/`;
+const subscriptionsApi = `${monolith}/subscriptions/`;
 
 export const authFetcher = (auth: string) => (url: string) => {
   return (
@@ -122,4 +124,43 @@ export const useSetContentDisabled = () => {
 
 export const useUserMetrics = () => {
   return useAuthSWR(authApi + "/metrics");
+};
+
+export const useSubLevels = () => {
+  const { data } = useAuthSWR(subscriptionsApi);
+
+  // these should rarely change
+  const defaultSubscriptions = [
+    {
+      level: 0,
+      name: "Free",
+      price: "0",
+    },
+    {
+      level: 1,
+      name: "Premium",
+      price: "0.0000001",
+    },
+    {
+      level: 2,
+      name: "Pro",
+      price: "0.0000005",
+    },
+    {
+      level: 3,
+      name: "God",
+      price: "1000",
+    },
+  ];
+
+  return data ?? defaultSubscriptions;
+};
+
+export const useGetSubName = () => {
+  const subLevels = useSubLevels();
+
+  return (level: number) => {
+    const subLevel = subLevels.find((sub: any) => sub.level === level);
+    return subLevel?.name ?? "Unknown ";
+  };
 };

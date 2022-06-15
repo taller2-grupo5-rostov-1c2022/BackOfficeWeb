@@ -1,6 +1,7 @@
 import { SongType } from "../../util/types";
 import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
+import { useGetSubName } from "../../services/requests";
 
 const SongsButton = ({ song }: any) => {
   return (
@@ -19,6 +20,8 @@ const AlbumLink = ({ row: song }: any) => {
 };
 
 const SongsList = ({ songs }: { songs: SongType[] }) => {
+  const getSubName = useGetSubName();
+
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
@@ -38,6 +41,13 @@ const SongsList = ({ songs }: { songs: SongType[] }) => {
       flex: 1,
       valueGetter: ({ row: song }: any) =>
         song?.artists?.map((artist: any) => artist?.name).join(", "),
+    },
+    {
+      field: "sub_level",
+      headerName: "Level",
+      minWidth: 80,
+      flex: 1,
+      valueGetter: ({ row: song }: any) => getSubName(song?.sub_level),
     },
     {
       field: "detail",

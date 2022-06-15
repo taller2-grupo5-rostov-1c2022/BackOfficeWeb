@@ -22,15 +22,15 @@ const UserButton = ({ user }: any) => {
 };
 
 const columns = [
-  { field: "uid", headerName: "UID", width: 200 },
-  { field: "displayName", headerName: "Name", width: 200 },
-  { field: "email", headerName: "Email", width: 200 },
+  { field: "uid", headerName: "UID", minWidth: 200, flex: 1 },
+  { field: "displayName", headerName: "Name", minWidth: 200, flex: 1 },
+  { field: "email", headerName: "Email", minWidth: 200, flex: 1 },
   {
     field: "role",
     headerName: "Role",
-    width: 400,
-    renderCell: ({ row: user }: any) => <RoleButton user={user} />,
-    valueGetter: ({ row: user }: any) => user?.customClaims?.role,
+    minWidth: 80,
+    flex: 1,
+    valueGetter: ({ row: user }: any) => user?.customClaims?.role ?? "listener",
   },
   {
     field: "detail",

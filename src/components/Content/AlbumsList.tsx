@@ -16,7 +16,6 @@ const AlbumsList = ({ albums }: { albums: AlbumType[] }) => {
     { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
     { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
     { field: "genre", headerName: "Genre", width: 100 },
-    { field: "sub_level", headerName: "Subscription", width: 100 },
     {
       field: "songs",
       headerName: "Songs",

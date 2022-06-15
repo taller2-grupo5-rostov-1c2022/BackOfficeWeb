@@ -1,3 +1,4 @@
+import { useGetSubName } from "../../services/requests";
 import { SongType } from "../../util/types";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
@@ -9,6 +10,8 @@ type SongProps = {
   error: any;
 };
 const Song = ({ song, loading, error }: SongProps) => {
+  const getSubName = useGetSubName();
+
   if (!song) {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
@@ -20,6 +23,7 @@ const Song = ({ song, loading, error }: SongProps) => {
       <div className="borderbox">
         <h1>{song?.name}</h1>
         <KeyValuePair label="Description" value={song?.description} />
+        <KeyValuePair label="Level" value={getSubName(song?.sub_level)} />
         <KeyValuePair label="Genre" value={song?.genre} />
         <KeyValuePair
           label="Artist"

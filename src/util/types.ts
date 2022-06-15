@@ -3,6 +3,7 @@ export type SongType = {
   name: string;
   description: string;
   genre: string;
+  sub_level: number;
   album: {
     id: number | string;
     name: string;
@@ -39,6 +40,7 @@ export type UserType = {
   name: string;
   location: string;
   interests: string; // needs to be parsed
+  sub_level: number;
   wallet: string;
   pfp: string;
   songs: SongType[];

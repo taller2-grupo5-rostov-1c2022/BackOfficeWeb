@@ -6,7 +6,7 @@ import {
 import styles from "../../styles/Home.module.css";
 import { playlistsApi, useAuthSWR } from "../../services/requests";
 import ContentNav from "../../components/Navigation/ContentNav";
-import PlaylistsList from "../../components/Content/PlaylistsLists";
+import PlaylistsList from "../../components/Content/PlaylistsList";
 
 const Playlists: any = () => {
   const {

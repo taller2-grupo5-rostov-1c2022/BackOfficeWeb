@@ -32,7 +32,6 @@ const Album = ({ album, loading, error }: AlbumProps) => {
           <h1>{album?.name}</h1>
           <KeyValuePair label="Description" value={album?.description} />
           <KeyValuePair label="Genre" value={album?.genre} />
-          <KeyValuePair label="Subscription" value={album?.sub_level} />
           <KeyValuePair
             label="Creator"
             value={album?.album_creator_id}
