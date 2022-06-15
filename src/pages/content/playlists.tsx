@@ -7,6 +7,7 @@ import styles from "../../styles/Home.module.css";
 import { playlistsApi, useAuthSWR } from "../../services/requests";
 import ContentNav from "../../components/Navigation/ContentNav";
 import PlaylistsList from "../../components/Content/PlaylistsList";
+import AppHead from "../../components/util/AppHead";
 
 const Playlists: any = () => {
   const {
@@ -17,6 +18,7 @@ const Playlists: any = () => {
 
   return (
     <div className={styles.container}>
+      <AppHead title="Playlists" />
       <ContentNav />
       <main className={styles.main}>
         {error ? (

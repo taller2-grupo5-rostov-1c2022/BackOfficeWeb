@@ -7,6 +7,7 @@ import {
 } from "next-firebase-auth";
 import styles from "../../styles/Home.module.css";
 import Profile from "../../components/Users/Profile";
+import AppHead from "../../components/util/AppHead";
 
 const User = () => {
   const router = useRouter();
@@ -25,6 +26,7 @@ const User = () => {
 
   return (
     <div className={styles.container}>
+      <AppHead title="User" />
       <Profile
         user={user}
         authUser={authUser?.user}

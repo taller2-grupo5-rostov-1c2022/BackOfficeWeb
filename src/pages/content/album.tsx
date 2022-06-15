@@ -7,6 +7,7 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import styles from "../../styles/Home.module.css";
+import AppHead from "../../components/util/AppHead";
 
 const Album = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const Album = () => {
 
   return (
     <div className={styles.container}>
+      <AppHead title="Album" />
       <AlbumData album={album} loading={loading} error={error} />
     </div>
   );

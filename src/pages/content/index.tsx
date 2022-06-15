@@ -4,12 +4,14 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import ContentNav from "../../components/Navigation/ContentNav";
+import AppHead from "../../components/util/AppHead";
 
 import styles from "../../styles/Home.module.css";
 
 const Content: any = () => {
   return (
     <div className={styles.container}>
+      <AppHead title="Content" />
       <ContentNav />
       <main className={styles.main}>
         <h2>Welcome to the Content Page</h2>

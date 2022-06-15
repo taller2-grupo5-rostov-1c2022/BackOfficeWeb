@@ -11,6 +11,7 @@ import { useAuthSWR, authApi, useUserMetrics } from "../../services/requests";
 import styles from "../../styles/Home.module.css";
 import Metrics from "../../components/Metrics/Metrics";
 import MoreMetrics from "../../components/Metrics/MoreMetrics";
+import AppHead from "../../components/util/AppHead";
 
 const UserMetrics: any = () => {
   const { data, loading, error } = useAuthSWR(authApi);
@@ -21,6 +22,7 @@ const UserMetrics: any = () => {
 
   return (
     <div className={styles.container}>
+      <AppHead title="User Metrics" />
       <MetricsNav />
       {loading ? "LOADING..." : null}
       {error ? "ERROR" : null}

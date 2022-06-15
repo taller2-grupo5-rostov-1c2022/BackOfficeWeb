@@ -7,6 +7,7 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import styles from "../../styles/Home.module.css";
+import AppHead from "../../components/util/AppHead";
 
 const Playlist = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const Playlist = () => {
 
   return (
     <div className={styles.container}>
+      <AppHead title="Playlist" />
       <PlaylistData playlist={playlist} loading={loading} error={error} />
     </div>
   );

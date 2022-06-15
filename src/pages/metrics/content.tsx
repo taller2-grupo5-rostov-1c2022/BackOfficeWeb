@@ -4,12 +4,14 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import MetricsNav from "../../components/Navigation/MetricsNav";
+import AppHead from "../../components/util/AppHead";
 
 import styles from "../../styles/Home.module.css";
 
 const Content: any = () => {
   return (
     <div className={styles.container}>
+      <AppHead title="Content Metrics" />
       <MetricsNav />
       <main className={styles.main}>
         <h2>Welcome to the Content Metrics Page</h2>

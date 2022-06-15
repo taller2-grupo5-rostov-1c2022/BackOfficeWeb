@@ -9,6 +9,7 @@ import {
   withAuthUser,
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
+import AppHead from "../components/util/AppHead";
 
 type loginData = {
   user_name: string;
@@ -56,6 +57,8 @@ const Auth: any = () => {
 
   return (
     <div className="container">
+      <AppHead title="Login" />
+
       <h1>Login</h1>
       <Formik
         initialValues={initialValues}
