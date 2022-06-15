@@ -72,7 +72,7 @@ type MetricsDatum = {
   };
 };
 
-export type MetricsData = {
+export type UserMetricsData = {
   total: number;
   disabled: number;
   provider: {
@@ -89,4 +89,8 @@ export type MetricsData = {
     // signed in in the last n days
     [days: string]: MetricsDatum;
   };
+};
+
+export type MoreUserMetricsData = {
+  passwordReset: number;
 };

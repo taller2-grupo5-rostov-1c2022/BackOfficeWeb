@@ -1,4 +1,4 @@
-import { MetricsData } from "../../util/types";
+import { UserMetricsData } from "../../util/types";
 import { Container } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
@@ -9,15 +9,16 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import styles from "./Metrics.module.css";
 
-type SectionProps = { metrics: MetricsData };
-type Props = { metrics: MetricsData | undefined };
+type SectionProps = { metrics: UserMetricsData };
+type Props = { metrics: UserMetricsData | undefined };
 
 const customUserTable = (
-  metrics: MetricsData,
+  metrics: UserMetricsData,
   title: string,
   atribute: string,
   transformLabel: (s: string) => string = (s) => s,
-  sortTable?: boolean
+  sortTable?: boolean,
+  emptyMessage: string = "No Rows"
 ) => (
   <TableContainer component={Paper}>
     <Table>
@@ -57,6 +58,18 @@ const customUserTable = (
               );
             })
         }
+        {metrics?.total === 0 ? (
+          <TableRow>
+            <TableCell
+              colSpan={3}
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              {emptyMessage}
+            </TableCell>
+          </TableRow>
+        ) : null}
       </TableBody>
     </Table>
   </TableContainer>
@@ -95,16 +108,23 @@ const Classification = ({ metrics }: SectionProps) => {
 
 const TimeData = ({ metrics }: SectionProps) => {
   const display = (title: string, atribute: string) =>
-    customUserTable(metrics, title, atribute, transformDays);
+    customUserTable(
+      metrics,
+      "In the last",
+      atribute,
+      transformDays,
+      false,
+      `No ${title} in the last 30 days`
+    );
   return (
     <Container className={styles.Data}>
       <Container>
         <h2>New Accounts</h2>
-        {display("In the last", "new")}
+        {display("New Accounts", "new")}
       </Container>
       <Container>
         <h2>Sign Ins</h2>
-        {display("In the last", "signedIn")}
+        {display("Sign Ins", "signedIn")}
       </Container>
     </Container>
   );

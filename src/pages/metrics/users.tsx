@@ -6,16 +6,18 @@ import {
 import { useMemo } from "react";
 import { userMetrics } from "../../client/metrics";
 import MetricsNav from "../../components/Navigation/MetricsNav";
-import { useAuthSWR, authApi } from "../../services/requests";
+import { useAuthSWR, authApi, useUserMetrics } from "../../services/requests";
 
 import styles from "../../styles/Home.module.css";
 import Metrics from "../../components/Metrics/Metrics";
+import MoreMetrics from "../../components/Metrics/MoreMetrics";
 
 const UserMetrics: any = () => {
   const { data, loading, error } = useAuthSWR(authApi);
   const users = data?.users;
 
   const metrics = useMemo(() => userMetrics(users), [users]);
+  const { data: moreMetrics } = useUserMetrics();
 
   return (
     <div className={styles.container}>
@@ -24,6 +26,7 @@ const UserMetrics: any = () => {
       {error ? "ERROR" : null}
       <main className={styles.main}>
         <Metrics metrics={metrics} />
+        <MoreMetrics metrics={moreMetrics} />
       </main>
     </div>
   );

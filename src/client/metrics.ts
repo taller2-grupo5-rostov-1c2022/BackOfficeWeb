@@ -1,4 +1,4 @@
-import { AuthUserType, MetricsData } from "../util/types";
+import { AuthUserType, UserMetricsData } from "../util/types";
 
 const daysAgo = [1, 3, 7, 15, 30].map((days) => {
   let date = new Date();
@@ -10,7 +10,7 @@ export const userMetrics = (users: AuthUserType[]) => {
   const total = users?.length;
   if (!(total >= 0)) return;
 
-  const data: MetricsData = {
+  const data: UserMetricsData = {
     total,
     disabled: 0,
     provider: {},
@@ -78,7 +78,12 @@ export const userMetrics = (users: AuthUserType[]) => {
   ["new", "signedIn"].forEach((att) => {
     daysAgo.forEach(({ days }) => {
       // @ts-ignore
-      const details = data[att][days].details;
+      if (!data[att][days]?.details || data[att][days]?.details.length === 0) {
+        return;
+      }
+
+      // @ts-ignore
+      const details = data[att][days]?.details;
       details.roles = {};
       details.providers = {};
 

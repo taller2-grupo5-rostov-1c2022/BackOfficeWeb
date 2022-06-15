@@ -119,3 +119,7 @@ export const useSetContentDisabled = () => {
   return (id: string | number, disabled: boolean, type: contentType) =>
     setContentDisabled(id, disabled, type, token);
 };
+
+export const useUserMetrics = () => {
+  return useAuthSWR(authApi + "/metrics");
+};
