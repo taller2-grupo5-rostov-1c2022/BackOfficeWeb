@@ -18,7 +18,7 @@ export type AlbumType = {
   id: number | string;
   name: string;
   description: string;
-  album_creator_id: number | string;
+  creator_id: number | string;
   genre: string;
   sub_level: number;
   songs: SongType[];

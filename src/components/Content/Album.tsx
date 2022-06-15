@@ -3,7 +3,7 @@ import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
 import SongsList from "./SongsList";
 import DisableButton from "./DisableButton";
-import CommentsList from "./CommentsList";
+import ReviewsList from "./ReviewsList";
 
 type AlbumProps = {
   album: AlbumType;
@@ -34,8 +34,8 @@ const Album = ({ album, loading, error }: AlbumProps) => {
           <KeyValuePair label="Genre" value={album?.genre} />
           <KeyValuePair
             label="Creator"
-            value={album?.album_creator_id}
-            url={"/users/user?uid=" + album?.album_creator_id}
+            value={album?.creator_id}
+            url={"/users/user?uid=" + album?.creator_id}
           />
         </div>
         <div className={styles.disabledButton}>
@@ -48,8 +48,8 @@ const Album = ({ album, loading, error }: AlbumProps) => {
       </div>
       <h2>Songs</h2>
       <SongsList songs={album?.songs} />
-      <h2>Comments</h2>
-      <CommentsList albumId={album?.id} />
+      <h2>Reviews</h2>
+      <ReviewsList albumId={album?.id} />
     </div>
   );
 };
