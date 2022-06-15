@@ -5,7 +5,7 @@ import { getAuth } from "firebase-admin/auth";
 
 initAuth();
 
-const handler = async (req, res) => {
+const handler = async (req: any, res: any) => {
   try {
     // FIXME: this allows the first login to go unchecked
     // this happens as firebase-admin is not initialized until the first call to setAuthCookies

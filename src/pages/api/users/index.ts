@@ -1,6 +1,6 @@
 import { getAuth } from "firebase-admin/auth";
 
-const handler = async (req, res) => {
+const handler = async (req: any, res: any) => {
   try {
     const users = await getAuth().listUsers();
     return res.status(200).json({ users: users.users });

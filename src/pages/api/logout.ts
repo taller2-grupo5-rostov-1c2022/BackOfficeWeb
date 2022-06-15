@@ -3,7 +3,7 @@ import initAuth from "../../server/initAuth";
 
 initAuth();
 
-const handler = async (req, res) => {
+const handler = async (req: any, res: any) => {
   try {
     await unsetAuthCookies(req, res);
   } catch (e) {
