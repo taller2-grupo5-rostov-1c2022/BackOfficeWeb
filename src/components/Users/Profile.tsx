@@ -28,6 +28,7 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
   const getSubName = useGetSubName();
 
   const [canRecharge, setCanRecharge] = useState(true);
+  const [updatedBalance, setUpdatedBalance] = useState<string>();
   const balance = useUserBalance(authUser?.uid);
   const _addBalance = useAddBalance(authUser?.uid);
   const addBalance = async () => {
@@ -36,6 +37,11 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
     try {
       await _addBalance(rechargeAmount);
       toast.success(`Recharged ${rechargeAmount}`);
+      setUpdatedBalance((updatedBalance) =>
+        String(
+          parseFloat(rechargeAmount) + parseFloat(updatedBalance ?? balance)
+        )
+      );
     } catch (e: any) {
       toast.error(e?.message);
     }
@@ -93,7 +99,7 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
               alignItems: "flex-start",
             }}
           >
-            <KeyValuePair label="Balance" value={balance} />
+            <KeyValuePair label="Balance" value={updatedBalance ?? balance} />
             <Button
               variant="text"
               sx={{ padding: "0 5px", margin: "0 5px" }}

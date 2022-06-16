@@ -45,9 +45,8 @@ const Users: any = () => {
     <div className={styles.container}>
       <AppHead title="Users" />
 
-      <br />
-
       <main className={styles.main}>
+        <h2 className="w80">Users</h2>
         {error ? (
           <p>Error</p>
         ) : users ? (

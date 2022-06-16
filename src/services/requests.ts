@@ -1,6 +1,5 @@
 import { useAuthUser } from "next-firebase-auth";
-import useSWR, { useSWRConfig } from "swr";
-import defaultSwr, { mutate } from "swr";
+import defaultSwr from "swr";
 
 const apiGateway = "https://rostov-gateway.herokuapp.com";
 export const authApi = "/api/users";
@@ -178,12 +177,8 @@ export const useUserBalance = (uid: string) => {
 
 export const useAddBalance = (uid: string) => {
   const token = useToken();
-  const { mutate } = useSWRConfig();
 
-  const addBalance = async (amountInEthers: string) => {
+  return async (amountInEthers: string) => {
     await post(`${paymentsAPi}pay/${uid}`, { amountInEthers }, token);
-    mutate(`${paymentsAPi}balances/${uid}`);
   };
-
-  return addBalance;
 };
