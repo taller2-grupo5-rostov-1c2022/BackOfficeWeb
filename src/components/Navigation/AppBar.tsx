@@ -72,6 +72,10 @@ const ResponsiveAppBar = () => {
       url: "/content/songs",
     },
     {
+      label: "Payments",
+      url: "/payments/transactions",
+    },
+    {
       label: "Metrics",
       url: "/metrics/users",
     },
