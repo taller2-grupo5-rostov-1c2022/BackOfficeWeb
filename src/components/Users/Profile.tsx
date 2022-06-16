@@ -7,7 +7,14 @@ import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import SongsList from "../Content/SongsList";
 import AlbumsList from "../Content/AlbumsList";
 import DisabledButton from "./DisableButton";
-import { useGetSubName } from "../../services/requests";
+import {
+  useAddBalance,
+  useGetSubName,
+  useUserBalance,
+} from "../../services/requests";
+import { Button } from "@mui/material";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 const defaultPfp = "https://c.tenor.com/XdFv1bbfOdEAAAAd/user-icons.gif";
 
@@ -19,6 +26,22 @@ type ProfileProps = {
 };
 const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
   const getSubName = useGetSubName();
+
+  const [canRecharge, setCanRecharge] = useState(true);
+  const balance = useUserBalance(authUser?.uid);
+  const _addBalance = useAddBalance(authUser?.uid);
+  const addBalance = async () => {
+    setCanRecharge(false);
+    const rechargeAmount = "0.0001";
+    try {
+      await _addBalance(rechargeAmount);
+      toast.success(`Recharged ${rechargeAmount}`);
+    } catch (e: any) {
+      toast.error(e?.message);
+    }
+    // setCanRecharge(true);
+    // limit use
+  };
 
   if (!user && !authUser) {
     if (loading) return <div>Loading...</div>;
@@ -64,6 +87,22 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
             value={getSubName(user?.sub_level)}
           />
           <KeyValuePair label="Wallet" value={user?.wallet} />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+            }}
+          >
+            <KeyValuePair label="Balance" value={balance} />
+            <Button
+              variant="text"
+              sx={{ padding: "0 5px", margin: "0 5px" }}
+              onClick={addBalance}
+              disabled={!canRecharge}
+            >
+              Add Balance
+            </Button>
+          </div>
         </div>
         <div className={styles.disabledButton}>
           <DisabledButton user={authUser} />
@@ -75,11 +114,6 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
 
       <h2>Albums</h2>
       <AlbumsList albums={user?.albums} />
-
-      {
-        //<h2>Playlists</h2>
-        //<PlaylistsList playlists={user?.playlists} />
-      }
     </div>
   );
 };

@@ -1,35 +1,44 @@
 import { useAuthUser } from "next-firebase-auth";
-import defaultSwr from "swr";
+import useSWR, { useSWRConfig } from "swr";
+import defaultSwr, { mutate } from "swr";
 
+const apiGateway = "https://rostov-gateway.herokuapp.com";
 export const authApi = "/api/users";
 const _songs = "devsongs"; // prod: songs , dev: devsongs
-const monolith = `https://rostov-gateway.herokuapp.com/${_songs}`;
+const monolith = `${apiGateway}/${_songs}`;
 export const usersApi = `${monolith}/users/`;
 export const songsApi = `${monolith}/songs/`;
 export const albumsApi = `${monolith}/albums/`;
 export const playlistsApi = `${monolith}/playlists/`;
 const subscriptionsApi = `${monolith}/subscriptions/`;
+export const paymentsAPi = `${apiGateway}/payments/`;
 
-export const authFetcher = (auth: string) => (url: string) => {
+const useToken = () => {
+  const auth = useAuthUser() as any;
+  const token = auth?.firebaseUser?.accessToken as string;
+  return token;
+};
+
+export const authFetcher = (auth: string, headers?: any) => (url: string) => {
   return (
     auth &&
     fetch(url, {
       headers: {
         authorization: "Bearer " + auth,
+        ...headers,
       },
     }).then((response) => response.json())
   );
 };
 
-export const useAuthFetcher = () => {
-  const auth = useAuthUser() as any;
-  const token = auth?.firebaseUser?.accessToken as string;
-  const _authFetcher = authFetcher(token);
+export const useAuthFetcher = (headers?: any) => {
+  const token = useToken();
+  const _authFetcher = authFetcher(token, headers);
   return { authFetcher: _authFetcher, token };
 };
 
-export const useAuthSWR = (route: string | null) => {
-  const { authFetcher, token } = useAuthFetcher();
+export const useAuthSWR = (route: string | null, headers?: any) => {
+  const { authFetcher, token } = useAuthFetcher(headers);
   const fetchedData = defaultSwr(token ? route : null, authFetcher, {
     // revalidateIfStale: false, // revalidates on mount
     revalidateOnFocus: false,
@@ -85,8 +94,7 @@ const setRole = async (uid: string, role: string, token: string) => {
 };
 
 export const useSetRole = () => {
-  const auth = useAuthUser() as any;
-  const token = auth?.firebaseUser?.accessToken as string;
+  const token = useToken();
   return (uid: string, role: string) => setRole(uid, role, token);
 };
 
@@ -95,8 +103,7 @@ const setDisabled = async (uid: string, disabled: boolean, token: string) => {
 };
 
 export const useSetDisabled = () => {
-  const auth = useAuthUser() as any;
-  const token = auth?.firebaseUser?.accessToken as string;
+  const token = useToken();
   return (uid: string, disabled: boolean) => setDisabled(uid, disabled, token);
 };
 
@@ -116,8 +123,7 @@ const setContentDisabled = async (
 };
 
 export const useSetContentDisabled = () => {
-  const auth = useAuthUser() as any;
-  const token = auth?.firebaseUser?.accessToken as string;
+  const token = useToken();
   return (id: string | number, disabled: boolean, type: contentType) =>
     setContentDisabled(id, disabled, type, token);
 };
@@ -163,4 +169,21 @@ export const useGetSubName = () => {
     const subLevel = subLevels.find((sub: any) => sub.level === level);
     return subLevel?.name ?? "Unknown ";
   };
+};
+
+export const useUserBalance = (uid: string) => {
+  const { data } = useAuthSWR(uid && `${paymentsAPi}balances/${uid}`);
+  return data?.balance ?? "unknown";
+};
+
+export const useAddBalance = (uid: string) => {
+  const token = useToken();
+  const { mutate } = useSWRConfig();
+
+  const addBalance = async (amountInEthers: string) => {
+    await post(`${paymentsAPi}pay/${uid}`, { amountInEthers }, token);
+    mutate(`${paymentsAPi}balances/${uid}`);
+  };
+
+  return addBalance;
 };

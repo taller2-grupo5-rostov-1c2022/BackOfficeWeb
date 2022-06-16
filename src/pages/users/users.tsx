@@ -45,6 +45,8 @@ const Users: any = () => {
     <div className={styles.container}>
       <AppHead title="Users" />
 
+      <br />
+
       <main className={styles.main}>
         {error ? (
           <p>Error</p>
