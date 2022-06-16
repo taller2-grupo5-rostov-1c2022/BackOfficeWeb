@@ -3,7 +3,7 @@ import defaultSwr from "swr";
 
 const apiGateway = "https://rostov-gateway.herokuapp.com";
 export const authApi = "/api/users";
-const _songs = "devsongs"; // prod: songs , dev: devsongs
+const _songs = "songs"; // prod: songs , dev: devsongs
 const monolith = `${apiGateway}/${_songs}`;
 export const usersApi = `${monolith}/users/`;
 export const songsApi = `${monolith}/songs/`;
