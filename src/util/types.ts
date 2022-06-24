@@ -45,6 +45,7 @@ export type UserType = {
   pfp: string;
   songs: SongType[];
   albums: AlbumType[];
+  my_playlists: PlaylistType[];
   rest: any[];
 };
 

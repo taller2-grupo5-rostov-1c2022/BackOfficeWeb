@@ -16,7 +16,6 @@ const columns = [
   { field: "id", headerName: "ID", width: 50 },
   { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
   { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
-  { field: "creator_id", headerName: "Creator", width: 100 },
   {
     field: "detail",
     headerName: "Detail",

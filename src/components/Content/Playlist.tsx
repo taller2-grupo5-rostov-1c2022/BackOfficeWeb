@@ -21,7 +21,11 @@ const Playlist = ({ playlist, loading, error }: PlaylistProps) => {
       <div className={" borderbox"}>
         <h1>{playlist?.name}</h1>
         <KeyValuePair label="Description" value={playlist?.description} />
-        <KeyValuePair label="Creator" value={playlist?.creator_id} />
+        <KeyValuePair
+          label="Creator"
+          value={playlist?.creator_id}
+          url={"/users/user?uid=" + playlist?.creator_id}
+        />
         <div className={styles.disabledButton}>
           <DisableButton
             id={playlist?.id}

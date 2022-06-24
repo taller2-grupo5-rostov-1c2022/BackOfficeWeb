@@ -15,6 +15,7 @@ import {
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import PlaylistsList from "../Content/PlaylistsList";
 
 const defaultPfp = "https://c.tenor.com/XdFv1bbfOdEAAAAd/user-icons.gif";
 
@@ -120,6 +121,9 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
 
       <h2>Albums</h2>
       <AlbumsList albums={user?.albums} />
+
+      <h2>Playlists</h2>
+      <PlaylistsList playlists={user?.my_playlists} />
     </div>
   );
 };
