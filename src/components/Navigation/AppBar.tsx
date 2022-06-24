@@ -16,6 +16,7 @@ import { withAuthUser, useAuthUser } from "next-firebase-auth";
 import { logOut } from "../../client/auth";
 import styles from "./Nav.module.css";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const NavLink = ({
   url,
@@ -110,7 +111,7 @@ const ResponsiveAppBar = () => {
                 component="div"
                 sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
-                LOGO
+                <Image src="/logo.png" alt="logo" width={50} height={50} />
               </Typography>
             </a>
           </Link>
@@ -161,7 +162,7 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
           >
-            LOGO
+            <Image src="/logo.png" alt="logo" width={50} height={50} />
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map(({ label, url }, i) => (
