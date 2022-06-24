@@ -49,5 +49,19 @@ const AlbumsList = ({ albums }: { albums: AlbumType[] }) => {
 export default AlbumsList;
 
 export const AlbumsTable = () => {
-  return <PaginatedTable url={albumsApi} columns={columns} />;
+  const filters = [
+    {
+      field: "name",
+      label: "Name",
+    },
+    {
+      field: "artist",
+      label: "Artist",
+    },
+    {
+      field: "genre",
+      label: "Genre",
+    },
+  ];
+  return <PaginatedTable url={albumsApi} columns={columns} filters={filters} />;
 };
