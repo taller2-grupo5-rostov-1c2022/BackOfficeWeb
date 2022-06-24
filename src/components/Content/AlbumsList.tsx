@@ -1,6 +1,8 @@
 import { AlbumType } from "../../util/types";
 import Link from "next/link";
 import { DataGrid } from "@mui/x-data-grid";
+import { albumsApi } from "../../services/requests";
+import PaginatedTable from "../util/PaginatedTable/PaginatedTable";
 
 const AlbumsButton = ({ album }: any) => {
   return (
@@ -10,28 +12,28 @@ const AlbumsButton = ({ album }: any) => {
   );
 };
 
-const AlbumsList = ({ albums }: { albums: AlbumType[] }) => {
-  const columns = [
-    { field: "id", headerName: "ID", width: 50 },
-    { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
-    { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
-    { field: "genre", headerName: "Genre", width: 100 },
-    {
-      field: "songs",
-      headerName: "Songs",
-      minWidth: 150,
-      flex: 1,
-      valueGetter: ({ row: album }: any) =>
-        album?.songs?.map(({ name }: any) => name).join(", "),
-    },
-    {
-      field: "detail",
-      headerName: "Detail",
-      width: 100,
-      renderCell: ({ row: album }: any) => <AlbumsButton album={album} />,
-    },
-  ];
+const columns = [
+  { field: "id", headerName: "ID", width: 50 },
+  { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
+  { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
+  { field: "genre", headerName: "Genre", width: 100 },
+  {
+    field: "songs",
+    headerName: "Songs",
+    minWidth: 150,
+    flex: 1,
+    valueGetter: ({ row: album }: any) =>
+      album?.songs?.map(({ name }: any) => name).join(", "),
+  },
+  {
+    field: "detail",
+    headerName: "Detail",
+    width: 100,
+    renderCell: ({ row: album }: any) => <AlbumsButton album={album} />,
+  },
+];
 
+const AlbumsList = ({ albums }: { albums: AlbumType[] }) => {
   return (
     <DataGrid
       autoHeight={true}
@@ -46,3 +48,7 @@ const AlbumsList = ({ albums }: { albums: AlbumType[] }) => {
 };
 
 export default AlbumsList;
+
+export const AlbumsTable = () => {
+  return <PaginatedTable url={albumsApi} columns={columns} />;
+};

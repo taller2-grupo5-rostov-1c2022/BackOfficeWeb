@@ -76,7 +76,7 @@ export default SongsList;
 
 export const SongsTable = () => {
   const getSubName = useGetSubName();
-  const columns = getColumns(getSubName); //.slice(0, -1); // remove detail column
+  const columns = getColumns(getSubName);
 
   return <PaginatedTable url={songsApi} columns={columns} />;
 };

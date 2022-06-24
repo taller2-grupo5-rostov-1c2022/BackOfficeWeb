@@ -4,28 +4,17 @@ import {
   withAuthUserTokenSSR,
 } from "next-firebase-auth";
 import styles from "../../styles/Home.module.css";
-import { albumsApi, useAuthSWR } from "../../services/requests";
 import ContentNav from "../../components/Navigation/ContentNav";
-import AlbumsList from "../../components/Content/AlbumsList";
+import { AlbumsTable } from "../../components/Content/AlbumsList";
 import AppHead from "../../components/util/AppHead";
 
 const Albums: any = () => {
-  const { data: albums, isValidating: loading, error } = useAuthSWR(albumsApi);
-
   return (
     <div className={styles.container}>
       <AppHead title="Albums" />
       <ContentNav />
       <main className={styles.main}>
-        {error ? (
-          <p>Error</p>
-        ) : albums ? (
-          <AlbumsList albums={albums} />
-        ) : loading ? (
-          <p>Loading...</p>
-        ) : (
-          <p>No Albums</p>
-        )}
+        <AlbumsTable />
       </main>
     </div>
   );
