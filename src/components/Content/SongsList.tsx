@@ -1,7 +1,8 @@
 import { SongType } from "../../util/types";
 import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
-import { useGetSubName } from "../../services/requests";
+import { songsApi, useGetSubName } from "../../services/requests";
+import PaginatedTable from "../util/PaginatedTable/PaginatedTable";
 
 const SongsButton = ({ song }: any) => {
   return (
@@ -19,43 +20,44 @@ const AlbumLink = ({ row: song }: any) => {
   );
 };
 
+const getColumns = (getSubName: any) => [
+  { field: "id", headerName: "ID", width: 50 },
+  { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
+  { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
+  { field: "genre", headerName: "Genre", width: 100 },
+  {
+    field: "album",
+    headerName: "Album",
+    width: 150,
+    valueGetter: ({ row: song }: any) => song?.album?.name,
+    renderCell: AlbumLink,
+  },
+  {
+    field: "artists",
+    headerName: "Artists",
+    minWidth: 200,
+    flex: 1,
+    valueGetter: ({ row: song }: any) =>
+      song?.artists?.map((artist: any) => artist?.name).join(", "),
+  },
+  {
+    field: "sub_level",
+    headerName: "Level",
+    minWidth: 80,
+    flex: 1,
+    valueGetter: ({ row: song }: any) => getSubName(song?.sub_level),
+  },
+  {
+    field: "detail",
+    headerName: "Detail",
+    width: 100,
+    renderCell: ({ row: song }: any) => <SongsButton song={song} />,
+  },
+];
+
 const SongsList = ({ songs }: { songs: SongType[] }) => {
   const getSubName = useGetSubName();
-
-  const columns = [
-    { field: "id", headerName: "ID", width: 50 },
-    { field: "name", headerName: "Name", minWidth: 200, flex: 1 },
-    { field: "description", headerName: "Description", minWidth: 250, flex: 1 },
-    { field: "genre", headerName: "Genre", width: 100 },
-    {
-      field: "album",
-      headerName: "Album",
-      width: 150,
-      valueGetter: ({ row: song }: any) => song?.album?.name,
-      renderCell: AlbumLink,
-    },
-    {
-      field: "artists",
-      headerName: "Artists",
-      minWidth: 200,
-      flex: 1,
-      valueGetter: ({ row: song }: any) =>
-        song?.artists?.map((artist: any) => artist?.name).join(", "),
-    },
-    {
-      field: "sub_level",
-      headerName: "Level",
-      minWidth: 80,
-      flex: 1,
-      valueGetter: ({ row: song }: any) => getSubName(song?.sub_level),
-    },
-    {
-      field: "detail",
-      headerName: "Detail",
-      width: 100,
-      renderCell: ({ row: song }: any) => <SongsButton song={song} />,
-    },
-  ];
+  const columns = getColumns(getSubName);
 
   return (
     <DataGrid
@@ -71,3 +73,10 @@ const SongsList = ({ songs }: { songs: SongType[] }) => {
 };
 
 export default SongsList;
+
+export const SongsTable = () => {
+  const getSubName = useGetSubName();
+  const columns = getColumns(getSubName); //.slice(0, -1); // remove detail column
+
+  return <PaginatedTable url={songsApi} columns={columns} />;
+};

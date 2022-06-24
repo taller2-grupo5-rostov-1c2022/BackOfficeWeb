@@ -1,0 +1,10 @@
+.Table th {
+  font-weight: bold;
+}
+
+.Controls {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}

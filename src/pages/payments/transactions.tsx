@@ -12,7 +12,6 @@ import { authApi, paymentsAPi, useAuthSWR } from "../../services/requests";
 import AppHead from "../../components/util/AppHead";
 import KeyValuePair from "../../components/util/KeyValuePair/KeyValuePair";
 import { useMemo } from "react";
-import transactions from "../metrics/transactions";
 
 const etherUrl = "https://rinkeby.etherscan.io";
 
