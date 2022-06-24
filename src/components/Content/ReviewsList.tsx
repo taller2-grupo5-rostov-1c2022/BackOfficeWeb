@@ -36,7 +36,6 @@ const ReviewsList = ({ albumId }: { albumId: string | number }) => {
       rows={reviews ?? []}
       columns={columns}
       pageSize={10}
-      rowsPerPageOptions={[5, 10, 50, 100]}
       getRowId={(row) => row?.reviewer?.id}
     />
   );

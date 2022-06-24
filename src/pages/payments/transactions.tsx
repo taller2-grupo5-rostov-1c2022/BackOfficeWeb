@@ -124,7 +124,6 @@ const Payments: any = () => {
             rows={enrichedTransactions ?? []}
             columns={columns}
             pageSize={10}
-            rowsPerPageOptions={[5, 10, 50, 100]}
           />
         ) : loading ? (
           <p>Loading...</p>

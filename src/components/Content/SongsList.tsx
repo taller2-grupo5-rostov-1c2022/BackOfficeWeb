@@ -66,7 +66,6 @@ const SongsList = ({ songs }: { songs: SongType[] }) => {
       rows={songs ?? []}
       columns={columns}
       pageSize={10}
-      rowsPerPageOptions={[5, 10, 50, 100]}
       getRowId={(row) => row.id}
     />
   );

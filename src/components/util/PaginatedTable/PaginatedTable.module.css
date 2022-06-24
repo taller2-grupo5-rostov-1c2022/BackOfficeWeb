@@ -1,5 +1,10 @@
+.Table thead {
+  background-color: #1a76d2dd;
+}
+
 .Table th {
   font-weight: bold;
+  color: #fff;
 }
 
 .Controls {

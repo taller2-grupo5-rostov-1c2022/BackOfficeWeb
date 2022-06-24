@@ -41,7 +41,6 @@ const AlbumsList = ({ albums }: { albums: AlbumType[] }) => {
       rows={albums ?? []}
       columns={columns}
       pageSize={10}
-      rowsPerPageOptions={[5, 10, 50, 100]}
       getRowId={(row) => row.id}
     />
   );

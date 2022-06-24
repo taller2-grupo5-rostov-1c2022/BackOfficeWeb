@@ -56,7 +56,6 @@ const Users: any = () => {
             rows={users ?? []}
             columns={columns}
             pageSize={10}
-            rowsPerPageOptions={[5, 10, 50, 100]}
             getRowId={(row) => row.uid}
           />
         ) : loading ? (

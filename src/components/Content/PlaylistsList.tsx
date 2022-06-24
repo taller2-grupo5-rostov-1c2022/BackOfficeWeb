@@ -33,7 +33,6 @@ const PlaylistsList = ({ playlists }: { playlists: PlaylistType[] }) => {
       rows={playlists ?? []}
       columns={columns}
       pageSize={10}
-      rowsPerPageOptions={[5, 10, 50, 100]}
       getRowId={(row) => row.id}
     />
   );
