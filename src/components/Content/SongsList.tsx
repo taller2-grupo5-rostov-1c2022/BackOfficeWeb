@@ -76,6 +76,29 @@ export default SongsList;
 export const SongsTable = () => {
   const getSubName = useGetSubName();
   const columns = getColumns(getSubName);
+  const filters = [
+    {
+      field: "name",
+      label: "Name",
+    },
+    {
+      field: "artist",
+      label: "Artist",
+    },
+    {
+      field: "genre",
+      label: "Genre",
+    },
+    {
+      field: "sub_level",
+      label: "Level",
+      options: [
+        { label: "Free", value: "0" },
+        { label: "Premium", value: "1" },
+        { label: "Pro", value: "2" },
+      ],
+    },
+  ];
 
-  return <PaginatedTable url={songsApi} columns={columns} />;
+  return <PaginatedTable url={songsApi} columns={columns} filters={filters} />;
 };

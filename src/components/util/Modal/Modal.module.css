@@ -1,38 +1,13 @@
-.ModalContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+.Modal .Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
-  background-color: #0001;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  pointer-events: none;
 }
 
-.Modal {
-  position: relative;
-  background-color: #fff;
-  z-index: 1100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 1rem;
-  border-radius: 4px;
-  box-shadow: 0 0 4px 0px #0008;
-}
-
-.ModalHeader {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.ModalHeader .Close {
-  cursor: pointer;
-}
-.ModalHeader .Close:hover {
-  color: #c22;
+.Modal .Container .Paper {
+  padding: 2rem;
+  pointer-events: all;
+  min-width: min(600px, 90%);
 }
