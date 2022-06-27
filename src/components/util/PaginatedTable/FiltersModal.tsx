@@ -56,7 +56,7 @@ const FiltersModal = ({
 
   const selectOptions = (filter: Filter) => {
     if (!filter.options) return undefined;
-    const options = [{ label: "None", value: "" }, ...filter.options];
+    const options = [{ label: "Any", value: "" }, ...filter.options];
     return options?.map((option) => ({
       id: option.value,
       name: option.label,

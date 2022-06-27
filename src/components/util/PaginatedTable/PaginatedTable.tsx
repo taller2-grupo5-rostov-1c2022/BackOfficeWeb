@@ -26,6 +26,78 @@ type Props = {
   filters?: Filter[];
 };
 
+type Data = {
+  items: any[];
+  total: number;
+  limit: number;
+  offset: number;
+};
+const useCursorPagination = (data: Data, setOffset: any) => {
+  const [pageData, setPageData] = useState({
+    page: 0,
+    offset: [0],
+  });
+  const { page, offset } = pageData;
+  const totalPages = Math.ceil(data?.total / data?.limit);
+
+  const reset = () => {
+    setPageData({
+      page: 0,
+      offset: [0],
+    });
+    setOffset(0);
+  };
+
+  const hasPrev = page > 0;
+  const hasNext = page < totalPages - 1;
+  const prev = () => {
+    if (!hasPrev) return;
+    const newOffset = offset[page - 1];
+    setPageData({
+      page: page - 1,
+      offset,
+    });
+
+    setOffset(newOffset);
+  };
+  const next = () => {
+    if (!hasNext) return;
+    const newOffset = data?.offset;
+    setPageData({
+      page: page + 1,
+      offset: [...offset, newOffset],
+    });
+
+    setOffset(newOffset);
+  };
+
+  return {
+    items: data?.items,
+    hasPrev,
+    hasNext,
+    prev,
+    next,
+    reset,
+    page: page + 1,
+    totalPages,
+  };
+};
+
+const getQuery = (
+  url: string,
+  offset: number | string | undefined,
+  limit: number,
+  filters: FilterValue[]
+) => {
+  const queryFilters = filters
+    .map((filter) => `&${filter.field}=${filter.value}`)
+    .join("");
+
+  const offsetQuery = offset ? `&offset=${offset}` : "";
+
+  return url + "?limit=" + limit + offsetQuery + queryFilters;
+};
+
 const Cell = ({ data, column }: { data: any; column: Column }): JSX.Element => {
   const value = column.valueGetter
     ? column?.valueGetter({ row: data })
@@ -36,29 +108,66 @@ const Cell = ({ data, column }: { data: any; column: Column }): JSX.Element => {
   return <>{value}</>;
 };
 
+const PaginatedTableBody = ({ items, columns, status }: any) => {
+  return status?.any || items?.length === 0 ? (
+    <TableBody>
+      <TableRow>
+        <TableCell
+          colSpan={columns.length}
+          style={{
+            textAlign: "center",
+          }}
+        >
+          {status.display ?? "No data"}
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  ) : (
+    <TableBody>
+      {items?.map((row: any, i: number) => (
+        <TableRow key={i}>
+          {columns?.map((column: any, j: number) => (
+            <TableCell key={j}>
+              <Cell data={row} column={column} />
+            </TableCell>
+          ))}
+        </TableRow>
+      ))}
+    </TableBody>
+  );
+};
+
 const PaginatedTable = ({ url, columns, filters: filterOptions }: Props) => {
-  const [page, setPage] = useState(0);
-  const size = 10;
+  const [offset, setOffset] = useState();
+  const limit = 10;
   const [filters, setFilters] = useState<FilterValue[]>([]);
   const [editFilters, setEditFilters] = useState(false);
-  const queryFilters = filters
-    .map((filter) => `&${filter.field}=${filter.value}`)
-    .join("");
 
   const { data, isValidating, error } = useAuthSWR(
-    url + "?page=" + page + "&size=" + size + queryFilters
-  );
-  const { data: nextData } = useAuthSWR(
-    url + "?page=" + (page + 1) + "&size=" + size + queryFilters
+    getQuery(url, offset, limit, filters)
   );
   const loading = isValidating && !data;
+  const { items, hasPrev, hasNext, prev, next, reset, page, totalPages } =
+    useCursorPagination(data, setOffset);
 
-  if (error) return <div>Error</div>;
-  if (loading) return <div>Loading</div>;
-  if (!data) return <div>No data</div>;
+  const _setFilters = (filters: FilterValue[]) => {
+    setFilters(filters);
+    reset();
+  };
 
-  const hasPrev = page > 0;
-  const hasNext = nextData && nextData.length > 0;
+  const status = {
+    loading,
+    error,
+    data: !!data,
+    any: loading || error || !data,
+    display: loading
+      ? "Loading..."
+      : error
+      ? error.message
+      : !data
+      ? "No data"
+      : "",
+  };
 
   return (
     <>
@@ -71,29 +180,7 @@ const PaginatedTable = ({ url, columns, filters: filterOptions }: Props) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {data?.map((row: any, i: number) => (
-              <TableRow key={i}>
-                {columns?.map((column: any, j: number) => (
-                  <TableCell key={j}>
-                    <Cell data={row} column={column} />
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-            {data?.length === 0 && (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  style={{
-                    textAlign: "center",
-                  }}
-                >
-                  No data
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+          <PaginatedTableBody items={items} columns={columns} status={status} />
         </Table>
       </TableContainer>
       <div className={styles.Controls}>
@@ -106,16 +193,11 @@ const PaginatedTable = ({ url, columns, filters: filterOptions }: Props) => {
           ) : null}
         </div>
         <div className={styles.Pagination}>
-          <Button
-            onClick={() => hasPrev && setPage(page - 1)}
-            disabled={!hasPrev}
-          >
+          <Button onClick={prev} disabled={!hasPrev || status?.any}>
             Previous
           </Button>
-          <Button
-            onClick={() => hasNext && setPage(page + 1)}
-            disabled={!hasNext}
-          >
+          {page}/{totalPages ?? ""}
+          <Button onClick={next} disabled={!hasNext || status?.any}>
             Next
           </Button>
         </div>
@@ -126,7 +208,7 @@ const PaginatedTable = ({ url, columns, filters: filterOptions }: Props) => {
           onClose={() => setEditFilters(false)}
           filterOptions={filterOptions}
           filters={filters}
-          setFilters={setFilters}
+          setFilters={_setFilters}
         />
       ) : null}
     </>
