@@ -1,7 +1,7 @@
 import { SongType } from "../../util/types";
 import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
-import { songsApi, useGetSubName } from "../../services/requests";
+import { songsApi, useGetSubName, useSubLevels } from "../../services/requests";
 import PaginatedTable from "../util/PaginatedTable/PaginatedTable";
 
 const SongsButton = ({ song }: any) => {
@@ -76,6 +76,12 @@ export default SongsList;
 export const SongsTable = () => {
   const getSubName = useGetSubName();
   const columns = getColumns(getSubName);
+  const subLevels = useSubLevels();
+  const subOptions = subLevels.map((subLevel) => ({
+    label: subLevel?.name,
+    value: String(subLevel?.level),
+  }));
+
   const filters = [
     {
       field: "name",
@@ -92,11 +98,7 @@ export const SongsTable = () => {
     {
       field: "sub_level",
       label: "Level",
-      options: [
-        { label: "Free", value: "0" },
-        { label: "Premium", value: "1" },
-        { label: "Pro", value: "2" },
-      ],
+      options: subOptions ?? [],
     },
   ];
 

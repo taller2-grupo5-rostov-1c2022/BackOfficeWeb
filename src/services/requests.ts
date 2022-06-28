@@ -131,7 +131,11 @@ export const useUserMetrics = () => {
   return useAuthSWR(authApi + "/metrics");
 };
 
-export const useSubLevels = () => {
+export const useSubLevels = (): {
+  level: number;
+  name: string;
+  price: string | number;
+}[] => {
   const { data } = useAuthSWR(subscriptionsApi);
 
   // these should rarely change
