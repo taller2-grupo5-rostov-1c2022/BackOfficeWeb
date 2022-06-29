@@ -1,36 +1,181 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/5e8bbcab-8156-49f2-bfbc-863ef1cda7bc/deploy-status)](https://app.netlify.com/sites/dancing-custard-2450ff/deploys)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Back Office Web
 
-## Getting Started
+Spotifiuby's Back Office Web is a web application that allows the management of the Spotifiuby's Users and Content.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
+### User Management
+
+- List Users
+- See User data
+- Update user roles
+- Block/Unblock users
+- See user content
+- Top-up user balance
+
+### Content Management
+
+- Content includes Songs, Albums and Playlists
+- List Content
+- See Content data
+- Block content
+
+### Payments
+
+- See system balance
+- List Payments
+
+### Metrics
+
+- User Metrics
+  - Blocked users
+  - Role / Provider metrics
+  - Sign up / Login metrics
+  - Password resets
+  -
+
+## Development
+
+Clone the repo.
+You'll need to have `node` and `yarn` installed.
+
+Installing dependencies:
+
+```console
+yarn
+```
+
+Running the project in development mode:
+
+```console
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+You'll need to set the following environment variables:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- `API_KEY` : Backend api key - Can be used to bypass bearer authentication.
+- `FIREBASE_PRIVATE_KEY` : Firebase project credentials
+- `COOKIE_SECRET_CURRENT` : Secret used for auth
+- `COOKIE_SECRET_PREVIOUS` : Secret used for auth
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Deployment
 
-## Learn More
+Deployment is made automatically on pushing to the master branch.
 
-To learn more about Next.js, take a look at the following resources:
+## API Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The following REST endpoints are available.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+all endpoints should either receive an authorization token or the api key as a header.
 
-## Deploy on Vercel
+### Users
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+##### Get All Users
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Route: `GET /api/users`
+Description: Get all firebase users
+Return Schema:
+
+```json
+{
+  "users": [
+    {
+      "uid": "string",
+      "email": "string",
+      "emailVerified": "boolean",
+      "displayName": "string",
+      "photoURL": "string",
+      "disabled": "boolean",
+      "metadata": {
+        "lastSignInTime": "date",
+        "creationTime": "date"
+      },
+      "customClaims": { "role": "string" },
+      "providerData": [
+        {
+          "providerId": "string"
+          ...
+        }
+      ],
+      ...
+    },
+  ]
+}
+```
+
+##### Get User Data
+
+Route: `GET /api/users/data/{uid}`
+Description: Get a firebase user
+Return Schema:
+
+```json
+{
+  "message": "Success",
+  "user": {
+    "uid": "083OLRCk71Poa8SYFaoPSTB2JQx2",
+    "email": "premium@gmail.com",
+    "emailVerified": false,
+    "displayName": "Ali",
+    "photoURL": "https://storage.googleapis.com/rostov-spotifiuby.appspot.com/pfp/083OLRCk71Poa8SYFaoPSTB2JQx2?t=1656084952",
+    "disabled": false,
+    "metadata": {
+      "lastSignInTime": "Fri, 24 Jun 2022 15:36:22 GMT",
+      "creationTime": "Fri, 10 Jun 2022 22:36:58 GMT"
+    },
+    "customClaims": {
+      "role": "artist"
+    },
+    "tokensValidAfterTime": "Fri, 10 Jun 2022 22:36:58 GMT",
+    "providerData": [
+      {
+        "uid": "premium@gmail.com",
+        "displayName": "Ali",
+        "email": "premium@gmail.com",
+        "photoURL": "https://storage.googleapis.com/rostov-spotifiuby.appspot.com/pfp/083OLRCk71Poa8SYFaoPSTB2JQx2?t=1656084952",
+        "providerId": "password"
+      }
+    ]
+  }
+}
+```
+
+##### Set Role
+
+Route: `POST /api/users/setRole/{uid}`
+Description: Set an users role
+Parameter Schema:
+
+```json
+{
+  "role": "string"
+}
+```
+
+##### Set Disabled
+
+Route: `POST /api/users/setDisabled/{uid}`
+Description: Set an users disabled status
+Parameter Schema:
+
+```json
+{
+  "disabled": "string"
+}
+```
+
+##### Metrics
+
+Route: `GET /api/users/metrics`
+Description: Get firebase user metrics
+Return Schema:
+
+```json
+{
+  "passwordReset": number
+}
+```
