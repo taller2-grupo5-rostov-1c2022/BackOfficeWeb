@@ -40,5 +40,13 @@ const PlaylistsList = ({ playlists }: { playlists: PlaylistType[] }) => {
 export default PlaylistsList;
 
 export const PlaylistsTable = () => {
-  return <PaginatedTable url={playlistsApi} columns={columns} />;
+  const filters = [
+    {
+      field: "name",
+      label: "Name",
+    },
+  ];
+  return (
+    <PaginatedTable url={playlistsApi} columns={columns} filters={filters} />
+  );
 };

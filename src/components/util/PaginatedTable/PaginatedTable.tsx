@@ -139,6 +139,7 @@ const PaginatedTableBody = ({ items, columns, status }: any) => {
 
 const PaginatedTable = ({ url, columns, filters: filterOptions }: Props) => {
   const [offset, setOffset] = useState();
+  const [nextOffset, setNextOffset] = useState();
   const limit = 10;
   const [filters, setFilters] = useState<FilterValue[]>([]);
   const [editFilters, setEditFilters] = useState(false);
@@ -146,6 +147,8 @@ const PaginatedTable = ({ url, columns, filters: filterOptions }: Props) => {
   const { data, isValidating, error } = useAuthSWR(
     getQuery(url, offset, limit, filters)
   );
+  useAuthSWR(getQuery(url, data?.offset, limit, filters)); // cache next
+
   const loading = isValidating && !data;
   const { items, hasPrev, hasNext, prev, next, reset, page, totalPages } =
     useCursorPagination(data, setOffset);
