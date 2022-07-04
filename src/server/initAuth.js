@@ -9,7 +9,7 @@ const initAuth = () => {
 
   init({
     authPageURL: "/auth",
-    appPageURL: "/",
+    appPageURL: "/metrics/users",
     loginAPIEndpoint: "/api/login", // required
     logoutAPIEndpoint: "/api/logout", // required
     onLoginRequestError: (err) => {
