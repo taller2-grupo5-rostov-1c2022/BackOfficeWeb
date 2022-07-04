@@ -3,7 +3,7 @@ import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
 import SongsList from "./SongsList";
 import DisableButton from "./DisableButton";
-import ReviewsList from "./ReviewsList";
+import { ReviewsTable } from "./ReviewsList";
 
 type AlbumProps = {
   album: AlbumType;
@@ -49,7 +49,7 @@ const Album = ({ album, loading, error }: AlbumProps) => {
       <h2>Songs</h2>
       <SongsList songs={album?.songs} />
       <h2>Reviews</h2>
-      <ReviewsList albumId={album?.id} />
+      <ReviewsTable albumId={album?.id} />
     </div>
   );
 };
