@@ -1,4 +1,3 @@
-import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
 
 import {
@@ -12,6 +11,7 @@ import { authApi, paymentsAPi, useAuthSWR } from "../../services/requests";
 import AppHead from "../../components/util/AppHead";
 import KeyValuePair from "../../components/util/KeyValuePair/KeyValuePair";
 import { useMemo } from "react";
+import DataGridWrapper from "../../components/util/DataGrid";
 
 const etherUrl = "https://rinkeby.etherscan.io";
 
@@ -118,7 +118,7 @@ const Payments: any = () => {
         {error ? (
           <p>Error</p>
         ) : enrichedTransactions ? (
-          <DataGrid
+          <DataGridWrapper
             autoHeight={true}
             className="w80"
             rows={enrichedTransactions ?? []}

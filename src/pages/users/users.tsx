@@ -1,4 +1,3 @@
-import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
 
 import {
@@ -10,6 +9,7 @@ import {
 import styles from "../../styles/Home.module.css";
 import { authApi, useAuthSWR } from "../../services/requests";
 import AppHead from "../../components/util/AppHead";
+import DataGridWrapper from "../../components/util/DataGrid";
 
 const UserButton = ({ user }: any) => {
   return (
@@ -50,13 +50,14 @@ const Users: any = () => {
         {error ? (
           <p>Error</p>
         ) : users ? (
-          <DataGrid
-            autoHeight={true}
+          <DataGridWrapper
             className="w80"
+            headerHeight={60}
+            rowHeight={52}
             rows={users ?? []}
             columns={columns}
             pageSize={10}
-            getRowId={(row) => row.uid}
+            getRowId={(row: any) => row.uid}
           />
         ) : loading ? (
           <p>Loading...</p>

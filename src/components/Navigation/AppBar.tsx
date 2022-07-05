@@ -84,9 +84,7 @@ const ResponsiveAppBar = () => {
   const settings = [
     {
       label: "Profile",
-      onClick: () => {
-        console.log("Profile", authUser);
-      },
+      url: "/users/user?uid=" + authUser?.id,
     },
     {
       label: "Logout",
@@ -202,11 +200,19 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map(({ label, onClick }, i) => (
+              {settings.map(({ label, onClick, url }, i) => (
                 <MenuItem key={i} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center" onClick={onClick}>
-                    {label}
-                  </Typography>
+                  {onClick ? (
+                    <Typography textAlign="center" onClick={onClick}>
+                      {label}
+                    </Typography>
+                  ) : (
+                    <Link href={url}>
+                      <a>
+                        <Typography textAlign="center">{label}</Typography>
+                      </a>
+                    </Link>
+                  )}
                 </MenuItem>
               ))}
             </Menu>
