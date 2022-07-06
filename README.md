@@ -34,7 +34,6 @@ Spotifiuby's Back Office Web is a web application that allows the management of 
   - Role / Provider metrics
   - Sign up / Login metrics
   - Password resets
-  -
 
 ## Development
 

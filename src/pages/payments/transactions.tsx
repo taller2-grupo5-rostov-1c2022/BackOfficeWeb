@@ -44,23 +44,23 @@ const renderTransaction = (params: any) => (
   </Link>
 );
 
-const renderUser = (params: any) => (
-  <Link href={"/users/user?uid=" + params.value?.uid ?? params?.row?.user_id}>
-    <a>{params?.value?.displayName ?? params?.row?.user_id}</a>
-  </Link>
-);
+const renderUser = (params: any) => {
+  return (
+    <Link href={"/users/user?uid=" + params?.row?.user_id}>
+      <a>{params?.value ?? params?.row?.user_id}</a>
+    </Link>
+  );
+};
+
+const getUser = (params: any) => params?.value?.displayName;
 
 // eslint-disable-next-line react/display-name
-const renderType = (systemWallet: string) => (params: any) =>
-  (
-    <div>
-      {systemWallet === params?.row?.sender_address
-        ? "Payment to User"
-        : systemWallet === params?.row?.receiver_address
-        ? "Deposit to System"
-        : "Unknown"}
-    </div>
-  );
+const getType = (systemWallet: string) => (params: any) =>
+  systemWallet === params?.row?.sender_address
+    ? "Payment to User"
+    : systemWallet === params?.row?.receiver_address
+    ? "Deposit to System"
+    : "Unknown";
 
 const Payments: any = () => {
   const {
@@ -89,6 +89,7 @@ const Payments: any = () => {
       headerName: "User",
       minWidth: 200,
       flex: 1,
+      valueGetter: getUser,
       renderCell: renderUser,
     },
     { field: "amount", headerName: "Amount", minWidth: 200, flex: 1 },
@@ -97,7 +98,7 @@ const Payments: any = () => {
       headerName: "Type",
       minWidth: 200,
       flex: 1,
-      renderCell: renderType(system?.systemWallet),
+      valueGetter: getType(system?.systemWallet),
     },
     {
       field: "date",
