@@ -3,12 +3,15 @@ import Link from "next/link";
 import { DataGrid } from "@mui/x-data-grid";
 import { albumsApi } from "../../services/requests";
 import PaginatedTable from "../util/PaginatedTable/PaginatedTable";
+import { Button } from "@mui/material";
 
 const AlbumsButton = ({ album }: any) => {
   return (
-    <Link href={"/content/album?id=" + album.id}>
-      <a>View</a>
-    </Link>
+    <Button variant="contained">
+      <Link href={"/content/album?id=" + album.id}>
+        <a>View</a>
+      </Link>
+    </Button>
   );
 };
 

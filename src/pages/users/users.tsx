@@ -10,12 +10,15 @@ import styles from "../../styles/Home.module.css";
 import { authApi, useAuthSWR } from "../../services/requests";
 import AppHead from "../../components/util/AppHead";
 import DataGridWrapper from "../../components/util/DataGrid";
+import { Button } from "@mui/material";
 
 const UserButton = ({ user }: any) => {
   return (
-    <Link href={"/users/user?uid=" + user.uid}>
-      <a>View</a>
-    </Link>
+    <Button variant="contained">
+      <Link href={"/users/user?uid=" + user.uid}>
+        <a>View</a>
+      </Link>
+    </Button>
   );
 };
 

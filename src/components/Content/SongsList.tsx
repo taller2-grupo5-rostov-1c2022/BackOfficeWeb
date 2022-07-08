@@ -3,12 +3,15 @@ import { DataGrid } from "@mui/x-data-grid";
 import Link from "next/link";
 import { songsApi, useGetSubName, useSubLevels } from "../../services/requests";
 import PaginatedTable from "../util/PaginatedTable/PaginatedTable";
+import { Button } from "@mui/material";
 
 const SongsButton = ({ song }: any) => {
   return (
-    <Link href={"/content/song?id=" + song.id}>
-      <a>View</a>
-    </Link>
+    <Button variant="contained">
+      <Link href={"/content/song?id=" + song.id}>
+        <a>View</a>
+      </Link>
+    </Button>
   );
 };
 
