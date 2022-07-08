@@ -10,7 +10,9 @@ import styles from "../../styles/Home.module.css";
 import { authApi, useAuthSWR } from "../../services/requests";
 import AppHead from "../../components/util/AppHead";
 import DataGridWrapper from "../../components/util/DataGrid";
-import { Button } from "@mui/material";
+import { Button, LinearProgress } from "@mui/material";
+import { Box } from "@mui/system";
+import { ErrorBox } from "../../components/util/Status/Error";
 
 const UserButton = ({ user }: any) => {
   return (
@@ -51,7 +53,7 @@ const Users: any = () => {
       <main className={styles.main}>
         <h2 className="w80">Users</h2>
         {error ? (
-          <p>Error</p>
+          <ErrorBox />
         ) : users ? (
           <DataGridWrapper
             className="w80"
@@ -63,10 +65,18 @@ const Users: any = () => {
             getRowId={(row: any) => row.uid}
           />
         ) : loading ? (
-          <p>Loading...</p>
-        ) : (
-          <p>No users</p>
-        )}
+          <Box
+            width={"80%"}
+            height={"100%"}
+            sx={{
+              padding: "20px",
+              border: "1px solid #e0e0e0",
+              borderRadius: "5px",
+            }}
+          >
+            <LinearProgress />
+          </Box>
+        ) : null}
       </main>
     </div>
   );

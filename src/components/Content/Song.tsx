@@ -1,8 +1,11 @@
 import { useGetSubName } from "../../services/requests";
 import { SongType } from "../../util/types";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
-import styles from "./Content.module.css";
+import { Alert } from "@mui/material";
+import { ErrorBox } from "../util/Status/Error";
+import { Loading } from "../util/Status/Loading";
 import DisableButton from "./DisableButton";
+import styles from "./Content.module.css";
 
 type SongProps = {
   song: SongType;
@@ -13,9 +16,9 @@ const Song = ({ song, loading, error }: SongProps) => {
   const getSubName = useGetSubName();
 
   if (!song) {
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
-    return <div>User not found</div>;
+    if (loading) return <Loading />;
+    if (error) return <ErrorBox />;
+    return <Alert severity="warning">Song not found</Alert>;
   }
 
   return (

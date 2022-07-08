@@ -12,10 +12,13 @@ import {
   useGetSubName,
   useUserBalance,
 } from "../../services/requests";
-import { Button } from "@mui/material";
+import { Alert, Button, LinearProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import PlaylistsList from "../Content/PlaylistsList";
+import { ErrorBox } from "../util/Status/Error";
+import { Box } from "@mui/system";
+import { Loading } from "../util/Status/Loading";
 
 const defaultPfp = "https://c.tenor.com/XdFv1bbfOdEAAAAd/user-icons.gif";
 
@@ -51,15 +54,19 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
   };
 
   if (!user && !authUser) {
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error?.message}</div>;
-    return <div>User not found</div>;
+    if (loading) return <Loading />;
+    if (error) return <ErrorBox />;
+    return <Alert severity="warning">User not found</Alert>;
   }
 
   if (authUser && !user) {
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error?.message}</div>;
-    return <div>User {authUser?.email ?? authUser?.uid} has no profile</div>;
+    if (loading) return <Loading />;
+    if (error) return <ErrorBox />;
+    return (
+      <Alert severity="warning">
+        User {authUser?.email ?? authUser?.uid} has no profile
+      </Alert>
+    );
   }
 
   return (

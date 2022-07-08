@@ -2,6 +2,9 @@ import { AlbumType } from "../../util/types";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
 import SongsList from "./SongsList";
+import { Alert } from "@mui/material";
+import { ErrorBox } from "../util/Status/Error";
+import { Loading } from "../util/Status/Loading";
 import DisableButton from "./DisableButton";
 import { ReviewsTable } from "./ReviewsList";
 
@@ -12,9 +15,9 @@ type AlbumProps = {
 };
 const Album = ({ album, loading, error }: AlbumProps) => {
   if (!album) {
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
-    return <div>User not found</div>;
+    if (loading) return <Loading />;
+    if (error) return <ErrorBox />;
+    return <Alert severity="warning">Album not found</Alert>;
   }
 
   return (

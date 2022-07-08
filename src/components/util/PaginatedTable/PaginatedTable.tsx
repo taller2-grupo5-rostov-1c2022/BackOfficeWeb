@@ -7,11 +7,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import React, { useState } from "react";
 import { useAuthSWR } from "../../../services/requests";
-import { Button } from "@mui/material";
+import { Button, LinearProgress } from "@mui/material";
 import { FilterList } from "@material-ui/icons";
 
 import styles from "./PaginatedTable.module.css";
 import FiltersModal, { Filter, FilterValue } from "./FiltersModal";
+import { ErrorBox } from "../Status/Error";
 
 type Column = {
   field: string;
@@ -118,7 +119,17 @@ const PaginatedTableBody = ({ items, columns, status }: any) => {
             textAlign: "center",
           }}
         >
-          {status.display ?? "No data"}
+          {status?.error ? (
+            <ErrorBox />
+          ) : status?.loading ? (
+            <LinearProgress
+              sx={{
+                margin: "10px",
+              }}
+            />
+          ) : (
+            status.display ?? "No data"
+          )}
         </TableCell>
       </TableRow>
     </TableBody>

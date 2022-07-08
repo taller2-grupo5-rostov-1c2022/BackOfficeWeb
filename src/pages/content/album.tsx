@@ -20,7 +20,7 @@ const Album = () => {
   } = useAuthSWR(id ? albumsApi + id : null);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pad_container}>
       <AppHead title="Album" />
       <AlbumData album={album} loading={loading} error={error} />
     </div>

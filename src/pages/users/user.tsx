@@ -25,7 +25,7 @@ const User = () => {
   } = useAuthSWR(uid ? authApi + "/data/" + uid : null);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pad_container}>
       <AppHead title="User" />
       <Profile
         user={user}

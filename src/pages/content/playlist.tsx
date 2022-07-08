@@ -20,7 +20,7 @@ const Playlist = () => {
   } = useAuthSWR(id ? playlistsApi + id : null);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pad_container}>
       <AppHead title="Playlist" />
       <PlaylistData playlist={playlist} loading={loading} error={error} />
     </div>

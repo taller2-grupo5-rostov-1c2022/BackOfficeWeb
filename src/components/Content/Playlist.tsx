@@ -2,6 +2,9 @@ import { PlaylistType } from "../../util/types";
 import KeyValuePair from "../util/KeyValuePair/KeyValuePair";
 import styles from "./Content.module.css";
 import SongsList from "./SongsList";
+import { Alert } from "@mui/material";
+import { ErrorBox } from "../util/Status/Error";
+import { Loading } from "../util/Status/Loading";
 import DisableButton from "./DisableButton";
 
 type PlaylistProps = {
@@ -11,9 +14,9 @@ type PlaylistProps = {
 };
 const Playlist = ({ playlist, loading, error }: PlaylistProps) => {
   if (!playlist) {
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
-    return <div>Playlist not found</div>;
+    if (loading) return <Loading />;
+    if (error) return <ErrorBox />;
+    return <Alert severity="warning">Playlist not found</Alert>;
   }
 
   return (

@@ -26,7 +26,10 @@ export const authFetcher = (auth: string, headers?: any) => (url: string) => {
         authorization: "Bearer " + auth,
         ...headers,
       },
-    }).then((response) => response.json())
+    }).then((response) => {
+      if (!response.ok) throw new Error(response.statusText);
+      return response.json();
+    })
   );
 };
 

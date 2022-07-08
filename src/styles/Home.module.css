@@ -1,6 +1,9 @@
 .container {
   padding: 0 2rem;
 }
+.pad_container {
+  padding: 20px 2rem;
+}
 
 .main {
   min-height: 100vh;
