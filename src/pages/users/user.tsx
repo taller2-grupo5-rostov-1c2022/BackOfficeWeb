@@ -31,7 +31,10 @@ const User = () => {
         user={user}
         authUser={authUser?.user}
         loading={user_loading || authUser_loading}
-        error={user_error || authUser_error}
+        error={
+          authUser_error
+          // || user_error // user may not have profile
+        }
       />
     </div>
   );

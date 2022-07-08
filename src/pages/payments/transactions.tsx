@@ -12,6 +12,8 @@ import AppHead from "../../components/util/AppHead";
 import KeyValuePair from "../../components/util/KeyValuePair/KeyValuePair";
 import { useMemo } from "react";
 import DataGridWrapper from "../../components/util/DataGrid";
+import { ErrorBox } from "../../components/util/Status/Error";
+import { Loading } from "../../components/util/Status/Loading";
 
 const etherUrl = "https://rinkeby.etherscan.io";
 
@@ -24,16 +26,24 @@ const getEnrichedTransactions = (transactions: any, users: any) => {
   }));
 };
 
-const SystemDetails = ({ system }: any) => {
+const SystemDetails = ({ system, loading, error }: any) => {
   return (
     <div className="w80">
       <h2>System</h2>
-      <KeyValuePair
-        label="Wallet"
-        value={system?.systemWallet}
-        url={etherUrl + "/address/" + system?.systemWallet}
-      />
-      <KeyValuePair label="Balance" value={system?.balance} />
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <ErrorBox />
+      ) : (
+        <>
+          <KeyValuePair
+            label="Wallet"
+            value={system?.systemWallet}
+            url={etherUrl + "/address/" + system?.systemWallet}
+          />
+          <KeyValuePair label="Balance" value={system?.balance} />
+        </>
+      )}
     </div>
   );
 };
@@ -68,7 +78,11 @@ const Payments: any = () => {
     loading,
     error,
   } = useAuthSWR(paymentsAPi + "transactions");
-  const { data: system } = useAuthSWR(paymentsAPi + "balances/system");
+  const {
+    data: system,
+    loading: sysLoading,
+    error: sysError,
+  } = useAuthSWR(paymentsAPi + "balances/system");
   const { data: users } = useAuthSWR(authApi);
 
   const enrichedTransactions = useMemo(
@@ -114,10 +128,12 @@ const Payments: any = () => {
       <AppHead title="Payments" />
 
       <main className={styles.main}>
-        <SystemDetails system={system} />
+        <SystemDetails system={system} loading={sysLoading} error={sysError} />
         <h2 className="w80">Transactions</h2>
         {error ? (
-          <p>Error</p>
+          <div className="w80">
+            <ErrorBox />
+          </div>
         ) : enrichedTransactions ? (
           <DataGridWrapper
             autoHeight={true}
@@ -127,10 +143,10 @@ const Payments: any = () => {
             pageSize={10}
           />
         ) : loading ? (
-          <p>Loading...</p>
-        ) : (
-          <p>No Transactions</p>
-        )}
+          <div className="w80">
+            <Loading />
+          </div>
+        ) : null}
       </main>
     </div>
   );

@@ -62,11 +62,6 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
   if (authUser && !user) {
     if (loading) return <Loading />;
     if (error) return <ErrorBox />;
-    return (
-      <Alert severity="warning">
-        User {authUser?.email ?? authUser?.uid} has no profile
-      </Alert>
-    );
   }
 
   return (
@@ -123,14 +118,28 @@ const Profile = ({ user, authUser, loading, error }: ProfileProps) => {
         </div>
       </div>
 
-      <h2>Songs</h2>
-      <SongsList songs={user?.songs} />
+      {!user ? (
+        <Alert
+          severity="warning"
+          sx={{
+            width: "100%",
+            marginTop: "10px",
+          }}
+        >
+          User {authUser?.email ?? authUser?.uid} has no profile
+        </Alert>
+      ) : (
+        <>
+          <h2>Songs</h2>
+          <SongsList songs={user?.songs} />
 
-      <h2>Albums</h2>
-      <AlbumsList albums={user?.albums} />
+          <h2>Albums</h2>
+          <AlbumsList albums={user?.albums} />
 
-      <h2>Playlists</h2>
-      <PlaylistsList playlists={user?.my_playlists} />
+          <h2>Playlists</h2>
+          <PlaylistsList playlists={user?.my_playlists} />
+        </>
+      )}
     </div>
   );
 };

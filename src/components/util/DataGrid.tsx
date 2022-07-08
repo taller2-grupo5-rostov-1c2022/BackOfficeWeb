@@ -6,7 +6,7 @@ const DataGridWrapper = (props: any) => (
       height: "631px",
       width: "80%",
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-start",
     }}
   >
     <DataGrid {...props} />

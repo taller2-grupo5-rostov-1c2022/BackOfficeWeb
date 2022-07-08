@@ -10,6 +10,7 @@ const handler = async (req: any, res: any) => {
     // FIXME: this allows the first login to go unchecked
     // this happens as firebase-admin is not initialized until the first call to setAuthCookies
     // an issue has been opened: https://github.com/gladly-team/next-firebase-auth/issues/470
+    // FOLLOWUP: this is a workaround for now
     try {
       getAuth();
     } catch (e) {
