@@ -139,7 +139,6 @@ const PaginatedTableBody = ({ items, columns, status }: any) => {
 
 const PaginatedTable = ({ url, columns, filters: filterOptions }: Props) => {
   const [offset, setOffset] = useState();
-  const [nextOffset, setNextOffset] = useState();
   const limit = 10;
   const [filters, setFilters] = useState<FilterValue[]>([]);
   const [editFilters, setEditFilters] = useState(false);

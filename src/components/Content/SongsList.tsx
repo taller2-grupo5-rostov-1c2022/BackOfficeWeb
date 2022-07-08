@@ -7,7 +7,12 @@ import { Button } from "@mui/material";
 
 const SongsButton = ({ song }: any) => {
   return (
-    <Button variant="contained">
+    <Button
+      variant="contained"
+      sx={{
+        margin: "-10px 0",
+      }}
+    >
       <Link href={"/content/song?id=" + song.id}>
         <a>View</a>
       </Link>

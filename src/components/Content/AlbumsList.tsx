@@ -7,7 +7,12 @@ import { Button } from "@mui/material";
 
 const AlbumsButton = ({ album }: any) => {
   return (
-    <Button variant="contained">
+    <Button
+      variant="contained"
+      sx={{
+        margin: "-10px 0",
+      }}
+    >
       <Link href={"/content/album?id=" + album.id}>
         <a>View</a>
       </Link>
