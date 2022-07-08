@@ -12,23 +12,32 @@ import styles from "../../styles/Home.module.css";
 import Metrics from "../../components/Metrics/Metrics";
 import MoreMetrics from "../../components/Metrics/MoreMetrics";
 import AppHead from "../../components/util/AppHead";
+import user from "../users/user";
 
 const UserMetrics: any = () => {
   const { data, loading, error } = useAuthSWR(authApi);
   const users = data?.users;
 
   const metrics = useMemo(() => userMetrics(users), [users]);
-  const { data: moreMetrics } = useUserMetrics();
+  const loadingMetrics = loading || (user && !metrics);
+
+  const {
+    data: moreMetrics,
+    loading: moreLoading,
+    error: moreError,
+  } = useUserMetrics();
 
   return (
     <div className={styles.container}>
       <AppHead title="User Metrics" />
       <MetricsNav />
-      {loading ? "LOADING..." : null}
-      {error ? "ERROR" : null}
       <main className={styles.main}>
-        <Metrics metrics={metrics} />
-        <MoreMetrics metrics={moreMetrics} />
+        <Metrics metrics={metrics} loading={loadingMetrics} error={error} />
+        <MoreMetrics
+          metrics={moreMetrics}
+          loading={moreLoading}
+          error={moreError}
+        />
       </main>
     </div>
   );

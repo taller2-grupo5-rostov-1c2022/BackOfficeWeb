@@ -1,25 +1,44 @@
 import { MoreUserMetricsData } from "../../util/types";
-import { Container } from "@mui/material";
+import { Alert, Container } from "@mui/material";
 import styles from "./Metrics.module.css";
+import { Loading } from "../util/Status/Loading";
+import { ErrorBox } from "../util/Status/Error";
 
-type Props = { metrics: MoreUserMetricsData | undefined };
+type Props = {
+  metrics: MoreUserMetricsData | undefined;
+};
 
-const OtherMetrics = ({ metrics }: Props) => {
+type Status = {
+  loading: boolean;
+  error: any;
+};
+
+const OtherMetrics = ({ metrics, loading, error }: Props & Status) => {
   return (
     <Container>
       <h2>Other Metrics</h2>
-      <p>• Password Resets: {metrics?.passwordReset}</p>
+      {loading ? (
+        <div>
+          <Loading />
+        </div>
+      ) : error ? (
+        <ErrorBox />
+      ) : metrics ? (
+        <>
+          <p>• Password Resets: {metrics?.passwordReset}</p>
+        </>
+      ) : (
+        <Alert severity="info">No data available</Alert>
+      )}
     </Container>
   );
 };
 
-const MoreMetrics = ({ metrics }: Props) => {
-  if (!metrics) return null;
-
+const MoreMetrics = ({ metrics, loading, error }: Props & Status) => {
   return (
     <Container className={styles.DataContainer}>
       <Container className={styles.Data}>
-        <OtherMetrics metrics={metrics} />
+        <OtherMetrics metrics={metrics} loading={loading} error={error} />
       </Container>
     </Container>
   );

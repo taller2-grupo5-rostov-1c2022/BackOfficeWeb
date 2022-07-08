@@ -1,5 +1,5 @@
 import { UserMetricsData } from "../../util/types";
-import { Container } from "@mui/material";
+import { Alert, Container } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -8,9 +8,15 @@ import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import styles from "./Metrics.module.css";
+import { Loading } from "../util/Status/Loading";
+import { ErrorBox } from "../util/Status/Error";
 
 type SectionProps = { metrics: UserMetricsData };
-type Props = { metrics: UserMetricsData | undefined };
+type Props = {
+  metrics: UserMetricsData | undefined;
+  loading: boolean;
+  error: any;
+};
 
 const customUserTable = (
   metrics: UserMetricsData,
@@ -130,16 +136,23 @@ const TimeData = ({ metrics }: SectionProps) => {
   );
 };
 
-const Metrics = ({ metrics }: Props) => {
-  if (!metrics) return null;
-
-  const debug = false;
+const Metrics = ({ metrics, loading, error }: Props) => {
+  if (!metrics)
+    return (
+      <Container>
+        <h1>Users</h1>
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <ErrorBox />
+        ) : (
+          <Alert severity="info">No Metrics</Alert>
+        )}
+      </Container>
+    );
 
   return (
     <>
-      {debug && (
-        <button onClick={() => console.log(metrics)}>[DEBUG LOG]</button>
-      )}
       <Details metrics={metrics} />
       <Container className={styles.DataContainer}>
         <Classification metrics={metrics} />
