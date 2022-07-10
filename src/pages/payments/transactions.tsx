@@ -17,13 +17,29 @@ import { Loading } from "../../components/util/Status/Loading";
 
 const etherUrl = "https://rinkeby.etherscan.io";
 
+type wDate = {
+  day: number;
+  month: number;
+  year: number;
+};
+
 const getEnrichedTransactions = (transactions: any, users: any) => {
   if (!transactions) return [];
   if (!users) return transactions;
-  return transactions.map((transaction: any) => ({
-    ...transaction,
-    user: users?.find((user: any) => user.uid === transaction.user_id),
-  }));
+  return transactions
+    .map((transaction: any) => ({
+      ...transaction,
+      user: users?.find((user: any) => user.uid === transaction.user_id),
+    }))
+    .sort((a: wDate, b: wDate) => {
+      if (a.year > b.year) return -1;
+      if (a.year < b.year) return 1;
+      if (a.month > b.month) return -1;
+      if (a.month < b.month) return 1;
+      if (a.day > b.day) return -1;
+      if (a.day < b.day) return 1;
+      return 0;
+    });
 };
 
 const SystemDetails = ({ system, loading, error }: any) => {
@@ -90,6 +106,10 @@ const Payments: any = () => {
     [transactions, users]
   );
 
+  const dPad = (num: any) => {
+    return String(num).padStart(2, "0");
+  };
+
   const columns = [
     {
       field: "id",
@@ -119,7 +139,8 @@ const Payments: any = () => {
       headerName: "Date",
       minWidth: 200,
       flex: 1,
-      valueGetter: ({ row: t }: any) => `${t?.year}/${t?.month}/${t?.day}`,
+      valueGetter: ({ row: t }: any) =>
+        `${t?.year}/${dPad(t?.month)}/${dPad(t?.day)}`,
     },
   ];
 
@@ -134,6 +155,10 @@ const Payments: any = () => {
           <div className="w80">
             <ErrorBox />
           </div>
+        ) : loading ? (
+          <div className="w80">
+            <Loading />
+          </div>
         ) : enrichedTransactions ? (
           <DataGridWrapper
             autoHeight={true}
@@ -142,10 +167,6 @@ const Payments: any = () => {
             columns={columns}
             pageSize={10}
           />
-        ) : loading ? (
-          <div className="w80">
-            <Loading />
-          </div>
         ) : null}
       </main>
     </div>
